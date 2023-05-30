@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget</title>
+    <link rel="stylesheet" href="./css/fonts.css" >
+    <link rel="stylesheet" href="./css/index.css" >
+    <link rel="stylesheet" href="./css/form.css">
+    <script src="./lib/jquery-3.7.0.min.js"></script>
+</head>
+<body id="body">
+    <nav class="header__nav-vertical">
+        <div>
+            <img class="burguer-icon" src="./icons/menu.png">
+        </div>
+        <ul class="header__item-list-vertical">
+        </ul>
+    </nav>
+    <header class="header" id="home">
+        <nav class="header__nav-horizontal">
+            <div class="horizontal-menu-left">
+                <ul class="header__item-list-horizontal">
+                    <li class="header__items-horizontal">
+                        <h2 class="page-title">Presupuesto</h2>
+                    </li>
+                    <li class="header__items-horizontal">
+                        <a href="#" id="create-budget">Nuevo</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="horizontal-menu-right">
+                <ul class="header__item-list-horizontal">
+                    <li class="header__items-horizontal">
+                        <a href="#" id="frequent-questions">Preguntas</a>
+                    </li>
+                    <li class="header__items-horizontal">
+                        <a href="#" id="contact-us">Contactanos</a>
+                    </li>
+                    <li class="header__items-horizontal">
+                        <a href="#" id="username"></a>
+                    </li>
+                    <li class="header__items-horizontal">
+                        <a href="#" id="logout">
+                            Logout
+                        </a>
+                    </li>
+                    <li class="header__items-horizontal">
+                        <select id="select-language">
+                            <option value="es">es</option>
+                            <option value="en">en</option>
+                        </select>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <div id="new-budget-modal" class="hide-modal">
+        <div class="div-create">
+            <div class="tabs">
+                <ul>
+                    <li>
+                        <a id="basic-item" class="active">Información Basica</a>
+                    </li>
+                    <li>
+                        <a id="expenses-item">Gastos</a>
+                    </li>
+                    <li>
+                        <a id="tags-item">Etiquetas</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="forms">
+                <form id="form-basic">
+                    <span id="basic-error" class="error-message"></span>
+                    <h3>Información Basica</h3>
+                    <div class="form-control">
+                        <label for="year">Año</label>
+                        <select id="year">
+                            <option value="">-- Seleccione un año --</option>
+                            <option value="2020">2020</option>
+                            <option value="2021">2021</option>
+                            <option value="2022">2022</option>
+                            <option value="2023">2023</option>
+                        </select>
+                    </div>
+                    <div class="form-control">
+                        <label for="month">Mes</label>
+                        <select id="month">
+                            <option value="">-- Seleccione un mes --</option>
+                            <option value="Enero">Enero</option>
+                            <option value="Febrero">Febrero</option>
+                            <option value="Marzo">Marzo</option>
+                            <option value="Abril">Abril</option>
+                            <option value="Mayo">Mayo</option>
+                            <option value="Junio">Junio</option>
+                            <option value="Julio">Julio</option>
+                            <option value="Agosto">Agosto</option>
+                            <option value="Septiembre">Septiembre</option>
+                            <option value="Octubre">Octubre</option>
+                            <option value="Noviembre">Noviembre</option>
+                            <option value="Diciembre">Diciembre</option>
+                        </select>
+                    </div>
+                    <div class="form-control">
+                        <label for="">Salario</label>
+                        <input type="number" id="salary" name="salary" value="0" /> 
+                    </div>
+                    <div>
+                        <input type="checkbox" id="check-save" name="check-save" onclick="checkSave()"/> Quieren agregar un monto como ahorro?
+                    </div>
+                    <div style="display: none;" class="form-control" id="save-field">
+                        <label for="save">Ahorro</label>
+                        <input type="number" id="save" name="save" value="0" />
+                    </div>
+                    <div>
+                        <input type="checkbox" id="check-additional-income" name="check-additional-income" onclick="checkAdditionalIncome()"/> Tienes ingresos adicionales?
+                    </div>
+                    <div style="display: none;" class="form-control" id="additional-income-field">
+                        <label for="additional-income">Ingresos Adicionales</label>
+                        <input type="number" id="additional-income" name="additional-income" value="0"/>
+                    </div>
+                </form>
+                <div id="div-form-expenses" class="hide-form">
+                    <form id="form-expenses">
+                        <span id="expense-error" class="error-message"></span>
+                        <h3>Gastos</h3>
+                        <p>Por favor, Agregue todos los gastos fijos (Arriendo, Internet, ...)</p>
+                        <div class="horizontal-form">
+                            <div class="form-control">
+                                <label for="expense">Gasto</label>
+                                <input type="text" id="expense" name="expenses" />
+                            </div>
+                            <div class="form-control">
+                                <label for="amount">Monto</label>
+                                <input type="number" id="amount" name="amounts" />
+                            </div>
+                        </div>
+                    </form>
+                    <a id="add-expenses" class="add-items">+ Agregarw gasto</a>
+                </div>
+                <div id="div-form-tags" class="hide-form">
+                    <form id="form-tags">
+                        <span id="tags-error" class="error-message"></span>
+                        <h3>Etiquetas</h3>
+                        <p>Crea etiquetas para los  gastos adicionales, e.j. (Taxis, Comprar, Libros, ...)</p>
+                        <div class="form-control">
+                            <label for="tag">Etiqueta</label>
+                            <input type="text" id="tag" name="tags" />
+                        </div>
+                    </form>
+                    <a id="add-tags" class="add-items">+ Agregar Etiqueta</a>
+                </div>
+                <button id="button-next" class="btn">Siguiente</button>
+                <button id="button-cancel" class="cancel">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="submenu" class="submenu">
+        <a id="principal">Principal</a><span id="second-part"></span>
+    </div>
+
+    <main id="all-budgeting" class="budgets">
+        <h3>Presupuestos 2023</h3>
+        <p id="budgets-error">Ningun presupuesto encontrado</p>
+        <div id="budgets">
+
+        </div>
+    </main>
+
+    <main id="empty-budgeting" class="empty-container">
+        <p>No se encontro el presupuesto <span id="month-year-budget"></span></p>
+        <button id="create-new-budget" class="btn">Crear Nuevo</button>
+    </main>
+
+    <main id="budgeting-main" class="curriculum-main">
+        <div class="column-25">
+            <section id="basic-information" class="card-budgeting">
+                <h3>Información Basica</h3>
+                
+            </section>
+            <section class="card-budgeting">
+                <h3>Gastos</h3>
+                <form id="expenses-form">
+                </form>
+            </section>
+            <section id="tags-section" class="card-budgeting">
+                <h3>Etiquetas</h3>
+            </section>
+        </div>
+        <div class="column-73">
+            <section class="graphic">
+                <div id="piechart" style="width: 100%; height: 200px;"></div>
+            </section>
+            <section class="additional">
+                <h3>Gastos Adicionales</h3>
+                <form id="form-additional-expenses">
+                    
+                </form>
+                <a id="add-additional-expense" class="add-items">+ Agregar gasto</a>
+            </section>
+        </div>
+    </main>
+
+    <main id="edit-user-info" class="curriculum-main" style="display:none;">
+        <div class="column-25">
+            <section id="user-basic-information" class="card-budgeting" style="text-align: center;">
+                <img class="img-circle" src="./img/user/default.png" alt="user-image"/>
+                <h3 id="user-name">User name</h3>
+            </section>
+            
+            <section id="user-options" class="card-budgeting">
+                <button id="btn-user-info" type="button" class="btn-setup active">Información Basica</button><br>
+                <button id="btn-password" type="button" class="btn-setup">Contraseña</button>
+                <button id="btn-setup" type="button" class="btn-setup">Configurar</button>
+                <button id="btn-delete" type="button" class="btn-setup">Eliminar Cuenta</button>
+            </section>
+        </div>
+
+        <div class="column-73">
+            <section id="user-basic-info-form" class="card-budgeting">
+                <div id="basic-form">
+                    <h2>Información Basica</h2>
+                    <label id="label-success-basics" class="label-success" style="display:none;">Información actualizada</label>
+                    <form>
+                        <div class="form-control">
+                            <label for="name">Nombre</label>
+                            <label id="label-error-name" class="label-error" style="display:none;">El Nombre es requerido</label>
+                            <input type="text" id="name" name="name" /> 
+                        </div>
+                        <div class="form-control">
+                            <label for="latname">Apellido</label>
+                            <label id="label-error-lastname" class="label-error" style="display:none;">El Apellido es requerido</label>
+                            <input type="text" id="lastname" name="lastname" /> 
+                        </div>
+                        <div class="form-control">
+                            <label for="username">Nombre de Usuario</label>
+                            <label id="label-error-username" class="label-error" style="display:none;">El Nombre de Usuario es requerido</label>
+                            <input type="text" id="username-form" name="username" /> 
+                        </div>
+                        <div class="form-control">
+                            <label for="email">E-Mail</label>
+                            <label id="label-error-email" class="label-error" style="display:none;">El E-Mail es requierido</label>
+                            <input type="text" id="email" name="email" /> 
+                        </div>
+                        <button id="update-user-basic" type="button" class="btn">Actualizar</button>
+                    </form>
+                </div>
+                <div id="password-form" style="display:none;">
+                    <h2>Contraseña</h2>
+                    <form>
+                        <label id="label-success-password" class="label-success" style="display:none;">Contraseña actualizada</label>
+                        <div class="form-control">
+                            <label>Contraseña Actual</label>
+                            <label id="label-error-current-password" class="label-error" style="display:none;">La Contraseña Actual es requerida</label>
+                            <input type="password" id="current-password" name="current-password" placeholder="Nueva Contraseña" />
+                        </div>
+                        <div class="form-control">
+                            <label>Nueva Contraseña</label>
+                            <label id="label-error-new-password"class="label-error" style="display:none;">La Nueva Contraseña es requerida</label>
+                            <input type="password" id="new-password" name="password" placeholder="Nueva Contraseña" />
+                        </div>
+                        <div class="form-control">
+                            <label>Confirmar Contraseña</label>
+                            <label id="label-error-confirm-password" class="label-error" style="display:none;">Debe confirmar la contraseña</label>
+                            <label id="label-error-not-similar" class="label-error" style="display:none;">La contraseña no coincide</label>
+                            <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirma Contraseña" />
+                        </div>
+                        <button id="update-user-password" type="button" class="btn">Actualizar</button>
+                    </form>
+                </div>
+                <div id="setup-form" style="display:none;">
+                    <h2>Configuración</h2>
+                    <form>
+                        <p>Cierre de sesion automatico despues de: </p>
+                        <select id="close-session">
+                            <option value="">-- Seleccionar --</option>
+                            <option value="2">2 min</option>
+                            <option value="5">5 min</option>
+                            <option value="10">10 min</option>
+                            <option value="20">20 min</option>
+                        </select>
+                    </form>
+                </div>
+                <div id="delete-form" style="display:none;">
+                    <h2>Eliminar Cuenta</h2>
+                    <form>
+                        <p>¿Desea eliminar su cuenta?, la información quedara almacenada en nuestra base de datos</p>
+                        <button class="btn-delete" id="delete-account-btn">Eliminar Cuenta</button>
+                    </form>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <main id="contact-us-info" class="curriculum-main" style="display:none;">
+        <div class="column-25">
+            <h2>Equipo</h2>
+            <p>Ingrid Lissette Gomez Arias</p>
+            <p>Daniel Pineda</p>
+            <p>Hedilberto Vásquez Mayor</p>
+            <p>Santiago Quevedo</p>
+        </div>
+        <div class="column-73">
+            <section id="contact-us-form" class="card-budgeting">
+                <h2>Contactanos</h2>
+                <p>Tienes alguna sugerencia, petición, queja, reclamo o mejora, dejanos saber</p>
+                <form>
+                    <label id="label-success-mail" class="label-success" style="display:none;">El correo ha sido enviado</label>
+                    <div class="form-control">
+                        <h3>Para: gestion.control.gastos@gmail.com</h3>
+                    </div>
+                    <div class="form-control">
+                        <label>E-Mail</label>
+                        <label id="label-error-email-mail" class="label-error" style="display:none;">El E-Mail es requerido</label>
+                        <input type="email" id="user-email" name="user-email" placeholder="email@ejemplo.com" /> 
+                    </div>
+                    <div class="form-control">
+                        <label>Asunto</label>
+                        <label id="label-error-subject" class="label-error" style="display:none;">El asunto es requerido</label>
+                        <input type="text" id="subject" name="subject" placeholder="Ejemplo: (Queja ..., Peticion ..., etc ...)" />
+                    </div>
+                    <div class="form-control">
+                        <label>Mensaje</label>
+                        <label id="label-error-message" class="label-error" style="display:none;"></label>
+                        <textarea id="message" name="message" placeholder="Dejanos tu mensaje ..."></textarea> 
+                    </div>
+                    <button id="send-message" type="button" class="btn">Enviar</button>
+                </form>
+            </section>
+        </div>
+    </main>
+
+    <main id="frequent-questions-info" class="curriculum-main" style="display:none;">
+        <div class="column-100">
+            <section id="questions" class="card-budgeting">
+                <h2>Preguntas Frecuentes</h2>
+                <h3 id="first-question" style="cursor:pointer;">+ ¿Como puedo crear un nuevo presupuesto?</h3>
+                <div id="first-question-answer" style="display:none;">
+                    <h4>Rta.</h4>
+                    <p>Debes dar clic en botón nuevo que se encuntra en el barra de menú o en el botón crear nuevo que se encuentra en el módulo principal</p>
+                    <img style="width: 100%;" src="./img/frequent-questions/buttons.PNG" alt="buttons" />
+                    <p>Seguido de esto se desplegara un formulario donde deberas ingresar como datos basicos los siguientes campos:</p>
+                    <ul>
+                        <li>Año</li>
+                        <li>Mes</li>
+                        <li>Salario</li>
+                        <li>Ahorro. (Solo en caso de querer agregar un monto a ahorrar)</li>
+                        <li>Ingresos Adicionales. (Solo en caso de tener ingresos adicionales)</li>
+                    </ul>
+                    <img style="width: 100%" src="./img/frequent-questions/basics-form.PNG" alt="Basic Forms" />
+                    <p>Seguido de esto debe inngresar los gastos fijos.</p>
+                    <img style="width: 100%" src="./img/frequent-questions/expenses.PNG" alt="Expenses" />
+                    <p>Para finalizar podra ingresar etiquetas, que representaran los gastos adicionales.</p>
+                    <img style="width: 100%" src="./img/frequent-questions/tags.PNG" alt="Tags" />
+                    <p>Automaticamente se mostrar el presupuesto del mes actual.</p>
+                    <img style="width: 100%" src="./img/frequent-questions/budget.PNG" alt="budget" />
+                </div>
+                <hr>
+                <h3 id="second-question" style="cursor:pointer;">+ ¿Cómo debe ser la contraseña?</h3>
+                <div id="second-question-answer" style="display:none; cursor:pointer;">
+                    <h4>Rta.</h4>
+                    <p>La contraseña debe tener minimo 8 digitos</p>
+                </div>
+                <hr>
+                <h3 id="third-question" style="cursor:pointer;">+ ¿Cómo puedo registrar los consumos o gastos que hago de forma diaria y habitualmente en pequeñas cantidades?</h3>
+                <div id="third-question-answer" style="display:none;">
+                    <h4>Rta.</h4>
+                    <p>Eiquetas</p>
+                </div>
+                <hr>
+                <h3 id="fourth-question" style="cursor:pointer;">+ Después de haber eliminado mi cuenta, ¿Puedo reestablecerla?</h3>
+                <div id="fourth-question-answer" style="display:none; cursor:pointer;">
+                    <h4>Rta.</h4>
+                    <p>Puedes ponerte en contacto con nosotros a través de la opción Contactenos</p>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <p>Copyright &copy; 2023 Budget, Todos los derechos reservados</p>
+    </footer>
+    </body>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="js/index.js"></script>
+</html>

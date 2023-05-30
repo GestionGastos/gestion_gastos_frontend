@@ -1,0 +1,582 @@
+body {
+  padding: 0;
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  font-size:  1.2vw;
+  background-size: 100%;
+}
+
+.modal {
+  background: rgba(0, 0, 0, 0.9);
+  color: #fff;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  transition: all .5s;
+  z-index: 1000;
+}
+
+.modal-content {
+  margin:  10rem auto;
+  width: 40%;
+  text-align: center;
+  font-family: 'Pacifico', 'Poppins', sans-serif;
+}
+
+.modal-content h2 {
+  font-family: 'Pacifico', 'Poppins', sans-serif;
+  color: red;
+  font-size: 5vw;
+  transform: rotate(345deg);
+}
+
+.hide-modal {
+  background: rgba(0, 0, 0, 0.9);
+  color: #fff;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  transition: all .5s;
+  z-index: 1000;
+  display: none;
+}
+
+.hide-modal-content {
+  margin: auto;
+  width: 40%;
+  text-align: center;
+  font-family: 'Pacifico', 'Poppins', sans-serif;
+}
+
+.header {
+  height: auto;
+  color: white;
+}
+
+.header__nav-vertical {
+  border-right: 1px solid black;
+  width: 5%;
+  height: 100%;
+  position: fixed;
+  z-index: 100px;
+  background-color: rgb(0, 0, 37);
+  text-align:center;
+  display:none;
+}
+
+.burguer-icon {
+  max-width: 40%;
+  margin: 1rem auto;
+  cursor: pointer;
+}
+
+.header__nav-horizontal {
+  height: 3rem;
+  position: relative;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  background-color: black;
+}
+
+.horizontal-menu-left {
+  display: flex;
+  max-width: calc(50% - 80px);
+  list-style: none;
+  margin-left: 3rem;
+}
+
+.horizontal-menu-right {
+  display: flex;
+  max-width: calc(50% - 80px);
+  list-style: none;
+  margin-right: 3rem;
+  vertical-align: middle;
+  color: white;
+}
+
+.header__item-list-vertical {
+  display: block;
+  list-style: none;
+  padding: 0 1rem;
+}
+
+.header__item-list-horizontal {
+  display: flex;
+  list-style: none;
+}
+
+.header__items-vertical {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.header__items-horizontal {
+  color: white;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.header__items-vertical a,
+.header__items-horizontal a {
+  text-decoration: none;
+  color: white;
+}
+
+.header__items-vertical a:hover,
+.header__items-vertical a:active,
+.header__items-vertical a.active {
+  border-bottom: 5px solid white;
+}
+
+.header__items-horizontal a:hover,
+.header__items-horizontal a:active, 
+.header__items-horizontal a.active {
+  color: white;
+  padding-bottom: 0.8rem;
+  border-bottom: 4px solid white;
+}
+
+.page-title {
+  font-family: 'Pacifico', 'Poppins', sans-serif;
+  font-size: 20px;
+  transform: rotate(351deg);
+  color: red;
+  position: relative;
+  top: -20px;
+}
+
+.titles {
+  font-family: 'Pacifico', 'Poppins', sans-serif;
+}
+
+.content {
+  margin: 0 auto;
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.section {
+  border: none;
+  margin: 0;
+  vertical-align: middle;
+  display: flex;
+  padding: 2rem 6rem;
+}
+
+.secondary-section {
+  border: none;
+  margin: 0;
+  vertical-align: middle;
+  display: flex;
+  padding: 0;
+}
+
+#sign-in-button-home {
+  margin-top: 2rem;
+  width: 50%;
+}
+
+#home {
+  margin: 0;
+  background-size: 100% 100%;
+  background-attachment: fixed;
+}
+
+#profile {
+  margin: 0;
+}
+
+#cv-icon-page {
+  text-align:left;
+  border-right: 1px solid black;
+}
+
+#portfolio-icon-page {
+  border-left: 1px solid black;
+}
+
+#exercise-icon-page {
+  text-align: right;
+}
+
+.icon-page {
+  padding-top: 2rem;
+  width: 50%;
+}
+
+#exercises {
+  margin: 0;
+  background-image: url('../images/fitness.jpg');
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  color: white;
+}
+
+#contact {
+  background-color: black;
+  color: white;
+}
+
+.principal-btn {
+  font-size: 12px;
+  padding: 5px 20px;
+  background-color: rgb(233, 156, 13);
+  border-radius: 20px;
+  color: black;
+  border: 1px solid rgb(233, 156, 13);
+  display: block;
+  cursor: pointer;
+  font-family: 'Pacifico', 'Poppins', sans-serif;
+}
+
+.center {
+  text-align: center;
+}
+
+.right {
+  text-align: right;
+}
+
+.left {
+  text-align: left;
+}
+
+.btn-centered {
+  margin: auto;
+}
+
+.column-100 {
+  width: 100%;
+  display: block;
+  padding: 1rem;
+}
+
+.column-50 {
+  width: 50%;
+  display: inline-block;
+  padding: 1rem;
+}
+
+.column-40 {
+  width: 40%;
+  display: inline-block;
+  padding: 1rem;
+}
+
+.right {
+  text-align: right;
+}
+
+.contact-card {
+  border-radius: 5px;
+  background-color: white;
+  display: flex;
+  line-height: 5px;
+  color: black;
+}
+
+.img-circle {
+  border-radius: 50%;
+  width: 100%;
+}
+
+footer {
+  background-color: black;
+  color: white;
+  font-size: 12px;
+  text-align: center;
+  padding: 5px;
+  position: relative;
+  z-index: 100;
+}
+
+/*Curriculum styles*/
+
+.curriculum-main {
+  width: 90%;
+  margin: 2rem auto;
+  display: flex;
+  
+}
+
+.column-25 {
+  width: 25%;
+  display: block;
+}
+
+.card {
+  border: 1px solid black;
+  border-radius: 5px;
+  font-size: 1vw;
+  text-align: center;
+  line-height: 5px;
+  margin-bottom: 1rem;
+  background-color: white;
+  padding: 1rem 0;
+}
+
+.card img {
+  border-radius: 100%;
+  width: 40%;
+}
+
+#show-less {
+  display: none;
+}
+
+.icons {
+  max-width: 5%;
+  border-radius: 0px important!
+}
+
+.hide-content {
+  width: 100%;
+  border-top: 1px solid black;
+  display: none;
+  margin-top: 1rem;
+}
+
+.skills {
+  padding: 1rem;
+  border: 1px solid black;
+  border-radius: 5px;
+  background-color: white;
+  margin-bottom: 1rem;
+}
+
+.hide-list {
+  display: none;
+}
+
+.languages {
+  padding: 1rem;
+  border: 1px solid black;
+  border-radius: 5px;
+  background-color: white;
+  margin-bottom: 1rem;
+}
+
+.hobbies {
+  padding: 1rem;
+  border: 1px solid black;
+  border-radius: 5px;
+  background-color: white;
+}
+
+.skills ul,
+.languages ul,
+.hobbies ul {
+  list-style: none;
+}
+
+.column-73 {
+  width: 73%;
+}
+
+.profile {
+  margin: 0 1rem 1rem 1rem;
+  padding: 1rem;
+  border-radius: 5px;
+  border: 1px solid black;
+  background-color: white;
+}
+
+.experience {
+  margin: 0 1rem;
+  padding: 1rem;
+  border: 1px solid black;
+  border-radius: 5px;
+  background-color: white;
+}
+
+.job-group {
+  width: 100%;
+}
+
+/*.job-title {
+  display: flex;
+  vertical-align: middle;
+}*/
+
+.experience-icons {
+  max-width: 50%;
+}
+
+/*.job-title ul {
+  margin-left: 1rem;
+  display: flex;
+  vertical-align: middle;
+}*/
+
+.div-icons {
+  width: 10%;
+}
+
+.job-description ul {
+  list-style: none;
+}
+
+.dates {
+  font-size: 12px;
+}
+
+.education {
+  margin: 1rem 1rem 0 1rem;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 1rem;
+  line-height: 5px;
+  background-color: white;
+}
+
+.education-title {
+  display: flex;
+}
+
+.edit-btn {
+  background-image: url('../icons/edit.png');
+  background-size: 70% 70%;
+  background-repeat: no-repeat;
+  background-position:50%;
+  width: 15%;
+  height: 30px;
+  background-color: rgb(255, 255, 255);
+  border-radius: 100%;
+  border: 1px solid rgb(43, 43, 255);
+  position: relative;
+  top: -100px;
+  left: 200px;
+  z-index: 10px;
+  cursor: pointer;
+}
+
+.div-create {
+  width: 90%;
+  background-color: white;
+  margin: auto;
+  display: flex;
+}
+
+.tabs {
+  width: 30%;
+  color: black;
+  border-right: 1px solid black;
+  padding: 1rem;
+}
+
+.tabs ul {
+  list-style: none;
+}
+
+.tabs ul li {
+  padding: 1rem;
+}
+
+.tabs ul li a {
+  color: gray;
+}
+
+.tabs ul li a.active {
+  border-bottom: 2px solid blue;
+  color: blue;
+}
+
+.forms {
+  width: 70%;
+  padding: 1rem;
+}
+
+.error-message {
+  border: 1px solid red;
+  background-color: rgb(156, 89, 89);
+  color: white;
+  padding: 0.5rem;
+  border-radius: 5px;
+  display: none;
+}
+
+.empty-container {
+  border: 1px solid black;
+  background-color: white;
+  border-radius: 5px;
+  margin: auto;
+  padding: 13rem 0;
+  text-align: center;
+  margin: 2rem;
+  display: none;
+}
+
+/* Bubgeting styles */
+
+#budgets-error {
+  text-align: center;
+  display: none;
+}
+.budgets {
+  border: 1px solid black;
+  border-radius: 5px;
+  font-size: 1vw;
+  background-color: white;
+  padding: 1rem;
+  margin: 1rem;
+}
+
+#budgets {
+  display: flex;
+}
+
+.budget {
+  border: 1px solid black;
+  border-radius: 5px;
+  display: flex;
+  width: 8%;
+  padding: 0.5rem;
+  margin: 0.23rem;
+  cursor: pointer;
+}
+
+.budget h4 {
+  text-align: center;
+}
+
+.card-budgeting {
+  border: 1px solid black;
+  border-radius: 5px;
+  font-size: 1vw;
+  /*text-align: center;*/
+  /*line-height: 5px;*/
+  margin-bottom: 1rem;
+  background-color: white;
+  padding: 1rem;
+}
+
+.graphic {
+  margin: 0 1rem 1rem 1rem;
+  padding: 1rem;
+  border-radius: 5px;
+  border: 1px solid black;
+  background-color: white;
+  text-align: center;
+}
+
+.additional {
+  margin: 0 1rem 1rem 1rem;
+  padding: 1rem;
+  border-radius: 5px;
+  border: 1px solid black;
+  background-color: white;
+  text-align: center;
+}
+
+.tags {
+  border: 1px solid gray;
+  border-radius: 5px;
+  padding: 0.2rem;
+  margin: 0.2rem;
+  cursor: pointer;
+}

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Sign up - Budget</title>
+        <link rel="stylesheet" href="../css/fonts.css">
+        <link rel="stylesheet" href="../css/index.css" />
+        <link rel="stylesheet" href="../css/user.css" />
+        <link rel="stylesheet" href="../css/form.css" />
+        <script src="../lib/jquery-3.7.0.min.js"></script>
+    </head>
+    <body id="home">
+        <header class="header" id="home">
+            <nav class="header__nav-horizontal" style="background-color: transparent">
+                <div class="horizontal-menu-left">
+                    <ul class="header__item-list-horizontal">
+                        <li class="header__items-horizontal">
+                            <h2 class="page-title">Presupuesto</h2>
+                        </li>
+                    </ul>
+                </div>
+                <div class="horizontal-menu-right">
+                    <ul class="header__item-list-horizontal">
+                        <li class="header__items-horizontal">
+                            <a style="color: black;" href="#" id="frequent-questions">Preguntas</a>
+                        </li>
+                        <li class="header__items-horizontal">
+                            <a style="color: black;" href="#" id="contact-us">Contactanos</a>
+                        </li>
+                        <li class="header__items-horizontal">
+                            <select id="select-language">
+                                <option value="es">es</option>
+                                <option value="en">en</option>
+                            </select>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+
+        <div id="submenu" class="submenu">
+            <a id="principal">Principal</a><span id="second-part"></span>
+        </div>
+
+        <div id="signup-form" class="card">
+            <form>
+                <h3>Registrate</h3>
+                <div class="form-control">
+                    <label for="name">Nombre</label>
+                    <label id="label-error-name" class="label-error" style="display:none;">El nombre es requerido</label>
+                    <input type="text" id="name" name="name" placeholder="Nombre" />
+                </div>
+                <div class="form-control">
+                    <label for="lastname">Apellido</label>
+                    <label id="label-error-lastname" class="label-error" style="display:none;">El apellido es requerido</label>
+                    <input type="text" id="lastname" name="lastname" placeholder="Apellido" />
+                </div>
+                <div class="form-control">
+                    <label for="username">Nombre de Usuario</label>
+                    <label id="label-error-username" class="label-error" style="display:none;">El nombre de usuario es requerido</label>
+                    <input type="text" id="username" name="username" placeholder="Username" />
+                </div>
+                <div class="form-control">
+                    <label for="email">E-Mail</label>
+                    <label id="label-error-email" class="label-error" style="display:none;">El E-Mail es requerido</label>
+                    <input type="email" id="email" name="email" placeholder="email@ejemplo.com" />
+                </div>
+                <div class="form-control">
+                    <label for="password">Contraseña</label>
+                    <label id="label-error-password" class="label-error" style="display:none;">La constraseña es requerido</label>
+                    <input type="password" id="password" name="password" placeholder="Contraseña" />
+                </div>
+                <div class="form-control">
+                    <label for="confirm-password">Confirmar Contraseña</label>
+                    <label id="label-error-confirm-password-empty"  class="label-error" style="display:none;">Debe confirmar la contraseña</label>
+                    <label id="label-error-confirm-password" class="label-error" style="display:none;">La contraseña no coincide</label>
+                    <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirmar Contraseña" />
+                </div>
+                <a id="login-link">Ya tengo cuenta</a><br><br>
+                <button id="signup" type="button" class="btn">Registrarse</button>
+            </form>
+        </div>
+
+        <main id="contact-us-info" class="curriculum-main" style="display:none;">
+            <div class="column-25">
+                <h2>Equipo</h2>
+                <p>Ingrid Lissette Gomez Arias</p>
+                <p>Daniel Pineda</p>
+                <p>Hedilberto Vásquez Mayor</p>
+                <p>Santiago Quevedo</p>
+            </div>
+            <div class="column-73">
+                <section id="contact-us-form" class="card-budgeting">
+                    <h2>Contactanos</h2>
+                    <p>Tienes alguna sugerencia, petición, queja, reclamo o mejora, dejanos saber</p>
+                    <form>
+                        <div class="form-control">
+                            <label>qesantiago@gmail.com</label>
+                        </div>
+                        <div class="form-control">
+                            <label>E-Mail</label>
+                            <input type="text" id="user-email" name="user-email" placeholder="email@ejemplo.com" /> 
+                        </div>
+                         <div class="form-control">
+                            <label>Mensaje</label>
+                            <textarea id="message" name="message" placeholder="Dejanos tu mensaje ..."></textarea> 
+                        </div>
+                        <button type="button" class="btn">Enviar</button>
+                    </form>
+                </section>
+            </div>
+        </main>
+
+        <main id="frequent-questions-info" class="curriculum-main" style="display:none;">
+            <div class="column-100">
+                <section id="questions" class="card-budgeting">
+                    <h2>Preguntas Frecuentes</h2>
+                    <h3 id="first-question" style="cursor:pointer;">+ ¿Como puedo crear un nuevo presupuesto?</h3>
+                    <div class="first-question-answer" style="display:none;">
+                        <h4>Rta.</h4>
+                        <p>Debes dar clic en botón nuevo que se encuntra en el barra de menú o en el botón crear nuevo que se encuentra en el módulo principal</p>
+                        <img style="width: 100%;" src="../img/frequent-questions/buttons.PNG" alt="buttons" />
+                        <p>Seguido de esto se desplegara un formulario donde deberas ingresar como datos basicos los siguientes campos:</p>
+                        <ul>
+                            <li>Año</li>
+                            <li>Mes</li>
+                            <li>Salario</li>
+                            <li>Ahorro. (Solo en caso de querer agregar un monto a ahorrar)</li>
+                            <li>Ingresos Adicionales. (Solo en caso de tener ingresos adicionales)</li>
+                        </ul>
+                        <img style="width: 100%" src="../img/frequent-questions/basics-form.PNG" alt="Basic Forms" />
+                        <p>Seguido de esto debe inngresar los gastos fijos.</p>
+                        <img style="width: 100%" src="../img/frequent-questions/expenses.PNG" alt="Expenses" />
+                        <p>Para finalizar podra ingresar etiquetas, que representaran los gastos adicionales.</p>
+                        <img style="width: 100%" src="../img/frequent-questions/tags.PNG" alt="Tags" />
+                        <p>Automaticamente se mostrar el presupuesto del mes actual.</p>
+                        <img style="width: 100%" src="../img/frequent-questions/budget.PNG" alt="budget" />
+                    </div>
+                    <hr>
+                    <h3 id="second-question" style="cursor:pointer;">+ ¿Cómo debe ser la contraseña?</h3>
+                    <div class="second-question-answer" style="display:none; cursor:pointer;">
+                        <h4>Rta.</h4>
+                        <p>La contraseña debe tener minimo 8 digitos</p>
+                    </div>
+                    <hr>
+                    <h3 id="third-question" style="cursor:pointer;">+ ¿Cómo puedo registrar los consumos o gastos que hago de forma diaria y habitualmente en pequeñas cantidades?</h3>
+                    <div class="third-question-answer" style="display:none;">
+                        <h4>Rta.</h4>
+                        <p>Eiquetas</p>
+                    </div>
+                    <hr>
+                    <h3 id="fourth-question" style="cursor:pointer;">+ Después de haber eliminado mi cuenta, ¿Puedo reestablecerla?</h3>
+                    <div class="fourth-question-answer" style="display:none; cursor:pointer;">
+                        <h4>Rta.</h4>
+                        <p>Puedes ponerte en contacto con nosotros a través de la opción Contactenos</p>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </body>
+    <script src="../js/signup.js"></script>
+    <footer>
+        <p>Copyright &copy; 2023 Budget, Todos los derechos reservados</p>
+    </footer>
+</html>

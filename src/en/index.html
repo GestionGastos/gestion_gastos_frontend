@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget</title>
+    <link rel="stylesheet" href="./css/fonts.css" >
+    <link rel="stylesheet" href="./css/index.css" >
+    <link rel="stylesheet" href="./css/form.css">
+</head>
+<body id="body">
+    <nav class="header__nav-vertical">
+        <div>
+            <img class="burguer-icon" src="./icons/menu.png">
+        </div>
+        <ul class="header__item-list-vertical">
+        </ul>
+    </nav>
+    <header class="header" id="home">
+        <nav class="header__nav-horizontal">
+            <div class="horizontal-menu-left">
+                <ul class="header__item-list-horizontal">
+                    <li class="header__items-horizontal">
+                        <h2 class="page-title">Budgeting</h2>
+                    </li>
+                    <li class="header__items-horizontal">
+                        <a href="#" id="create-budget">New</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="horizontal-menu-right">
+                <ul class="header__item-list-horizontal">
+                    <li class="header__items-horizontal">
+                        <select id="select-language">
+                            <option value="en">en</option>
+                            <option value="es">es</option>
+                        </select>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <div id="new-budget-modal" class="hide-modal">
+        <div class="div-create">
+            <div class="tabs">
+                <ul>
+                    <li>
+                        <a id="basic-item" class="active">Basic Information</a>
+                    </li>
+                    <li>
+                        <a id="expenses-item">Expenses</a>
+                    </li>
+                    <li>
+                        <a id="tags-item">Tags</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="forms">
+                <form id="form-basic">
+                    <span id="basic-error" class="error-message"></span>
+                    <h3>Basic information</h3>
+                    <div class="form-control">
+                        <label for="year">Year</label>
+                        <select id="year">
+                            <option value="">-- Select a Year --</option>
+                            <option value="2020">2020</option>
+                            <option value="2021">2021</option>
+                            <option value="2022">2022</option>
+                            <option value="2023">2023</option>
+                        </select>
+                    </div>
+                    <div class="form-control">
+                        <label for="month">Month</label>
+                        <select id="month">
+                            <option value="">-- Select a month --</option>
+                            <option value="January">January</option>
+                            <option value="Febrary">Febrary</option>
+                            <option value="March">March</option>
+                            <option value="April">April</option>
+                            <option value="May">May</option>
+                            <option value="June">June</option>
+                            <option value="July">July</option>
+                            <option value="August">August</option>
+                            <option value="September">September</option>
+                            <option value="October">October</option>
+                            <option value="November">November</option>
+                            <option value="December">December</option>
+                        </select>
+                    </div>
+                    <div class="form-control">
+                        <label for="">Salary</label>
+                        <input type="number" id="salary" name="salary" value="0" /> 
+                    </div>
+                    <div>
+                        <input type="checkbox" id="check-save" name="check-save" onclick="checkSave()"/> Do you want to add an amount to save?
+                    </div>
+                    <div style="display: none;" class="form-control" id="save-field">
+                        <label for="save">Save</label>
+                        <input type="number" id="save" name="save" value="0" />
+                    </div>
+                    <div>
+                        <input type="checkbox" id="check-additional-income" name="check-additional-income" onclick="checkAdditionalIncome()"/> Do you have additional incomes?
+                    </div>
+                    <div style="display: none;" class="form-control" id="additional-income-field">
+                        <label for="additional-income">Additional Income</label>
+                        <input type="number" id="additional-income" name="additional-income" value="0"/>
+                    </div>
+                </form>
+                <div id="div-form-expenses" class="hide-form">
+                    <form id="form-expenses">
+                        <span id="expense-error" class="error-message"></span>
+                        <h3>Expenses</h3>
+                        <p>Please, add all the expenses, this expenses are fixed e.g.(Rent, Internet, ...)</p>
+                        <div class="horizontal-form">
+                            <div class="form-control">
+                                <label for="expense">Expense</label>
+                                <input type="text" id="expense" name="expenses" />
+                            </div>
+                            <div class="form-control">
+                                <label for="amount">Amount</label>
+                                <input type="number" id="amount" name="amounts" />
+                            </div>
+                        </div>
+                    </form>
+                    <a id="add-expenses" class="add-items">+ Add Expense</a>
+                </div>
+                <div id="div-form-tags" class="hide-form">
+                    <form id="form-tags">
+                        <span id="tags-error" class="error-message"></span>
+                        <h3>Tags</h3>
+                        <p>Create tags for additional expenses, e.g. (Taxis, Mall, Books, ...)</p>
+                        <div class="form-control">
+                            <label for="tag">Tag</label>
+                            <input type="text" id="tag" name="tags" />
+                        </div>
+                    </form>
+                    <a id="add-tags" class="add-items">+ Add Tag</a>
+                </div>
+                <button id="button-next" class="btn">Next</button>
+                <button id="button-cancel" class="cancel">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <main id="all-budgeting" class="budgets">
+        <h3>Budgets 2023</h3>
+        <p id="budgets-error">Any Budget was Found</p>
+        <div id="budgets">
+
+        </div>
+    </main>
+
+    <main id="empty-budgeting" class="empty-container">
+        <p>Budgeting not Found</p>
+        <button id="create-new-budget" class="btn">Create New</button>
+    </main>
+
+    <main id="budgeting-main" class="curriculum-main">
+        <div class="column-25">
+            <section id="basic-information" class="card-budgeting">
+                <h3>Basic Information</h3>
+                
+            </section>
+            <section class="card-budgeting">
+                <h3>Expenses</h3>
+                <form id="expenses-form">
+                </form>
+            </section>
+            <section id="tags-section" class="card-budgeting">
+                <h3>Tags</h3>
+            </section>
+        </div>
+        <div class="column-73">
+            <section class="graphic">
+                <div id="piechart" style="width: 100%; height: 200px;"></div>
+            </section>
+            <section class="additional">
+                <h3>Additional Expenses</h3>
+                <form id="form-additional-expenses">
+                    
+                </form>
+                <a id="add-additional-expense" class="add-items">+ Add Expense</a>
+            </section>
+        </div>
+    </main>
+    <footer>
+        <p>Copyright &copy; 2023 Wellness, All Rights Reserved</p>
+    </footer>
+    </body>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="js/index.js"></script>
+</html>
