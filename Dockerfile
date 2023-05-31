@@ -1,2 +1,2 @@
-FROM ngnix:alpine
-COPY ./src /usr/share/ngnix/html
+FROM httpd:latest
+COPY ./src/ /usr/local/apache2/htdocs/
