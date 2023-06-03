@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Login - Budget</title>
+        <link rel="stylesheet" href="../css/fonts.css">
+        <link rel="stylesheet" href="../css/index.css" />
+        <link rel="stylesheet" href="../css/user.css" />
+        <link rel="stylesheet" href="../css/form.css" />
+        <script src="../lib/jquery-3.7.0.min.js"></script>
+    </head>
+    <body id="home">
+        <header class="header" id="home">
+            <nav class="header__nav-horizontal" style="background-color: transparent;">
+                <div class="horizontal-menu-left">
+                    <ul class="header__item-list-horizontal">
+                        <li class="header__items-horizontal">
+                            <h2 class="page-title">Budget</h2>
+                        </li>
+                    </ul>
+                </div>
+                <div class="horizontal-menu-right">
+                    <ul class="header__item-list-horizontal">
+                        <li class="header__items-horizontal">
+                            <a style="color: black;" href="#" id="frequent-questions">Questions</a>
+                        </li>
+                        <li class="header__items-horizontal">
+                            <a style="color: black;" href="#" id="contact-us">Contact us</a>
+                        </li>
+                        <li class="header__items-horizontal">
+                            <select id="select-language">
+                                <option value="en">en</option>
+                                <option value="es">es</option>
+                            </select>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+
+        <div id="submenu" class="submenu">
+            <a id="principal">Home</a><span id="second-part"></span>
+        </div>
+
+        <div id="login-form" class="card">
+            <form>
+                <h3>Login</h3>
+                <label id="label-error-invalid" class="label-error" style="display:none;">E-Mail or Password Invalid</label>
+                <label id="label-error-deleted" class="label-error" style="display:none;">User not Found</label>
+                <div class="form-control">
+                    <label for="email">E-Mail</label>
+                    <label id="label-error-email" class="label-error" style="display:none;">E-Mail is Required</label>
+                    <input type="email" id="email" name="email" placeholder="email@example.com" required/>
+                </div>
+                <div class="form-control">
+                    <label for="password">Password</label>
+                    <label id="label-error-password" class="label-error" style="display:none;">Password is Required</label>
+                    <input type="password" id="password" name="password" placeholder="Contraseña" required/>
+                </div>
+                <a id="forget" href="">¿Forgot your Password?</a><br><br>
+                <button type="button" id="login" class="btn">Login</button>
+                <button type="button" id="signup" class="btn">Sign up</button>
+            </form>
+        </div>
+
+        <main id="contact-us-info" class="curriculum-main" style="display:none;">
+            <div class="column-25">
+                <h2>Team</h2>
+                <p>Ingrid Lissette Gomez Arias</p>
+                <p>Daniel Pineda</p>
+                <p>Hedilberto Vásquez Mayor</p>
+                <p>Santiago Quevedo</p>
+            </div>
+            <div class="column-73">
+                <section id="contact-us-form" class="card-budgeting">
+                    <h2>Contact us</h2>
+                    <p>Do you have a suggection, pettion, complaint, claim or improve? let us know</p>
+                    <form>
+                        <label id="label-success-mail" class="label-success" style="display:none;">The E-Mail was sent</label>
+                        <div class="form-control">
+                            <h3>To: gestion.control.gastos@gmail.com</h3>
+                        </div>
+                        <div class="form-control">
+                            <label>E-Mail</label>
+                            <label id="label-error-email-mail" class="label-error" style="display:none;">E-Mail is Required</label>
+                            <input type="email" id="user-email" name="user-email" placeholder="email@ejemplo.com" /> 
+                        </div>
+                        <div class="form-control">
+                            <label>Subject</label>
+                            <label id="label-error-subject" class="label-error" style="display:none;">Subject is Required</label>
+                            <input type="text" id="subject" name="subject" placeholder="Example: (Complaint ..., Petition ..., etc ...)" />
+                        </div>
+                        <div class="form-control">
+                            <label>Message</label>
+                            <label id="label-error-message" class="label-error" style="display:none;">Message is Required</label>
+                            <textarea id="message" name="message" placeholder="Write us your message ..."></textarea> 
+                        </div>
+                        <button id="send-message" type="button" class="btn">Send</button>
+                    </form>
+                </section>
+            </div>
+        </main>
+    
+        <main id="frequent-questions-info" class="curriculum-main" style="display:none;">
+            <div class="column-100">
+                <section id="questions" class="card-budgeting">
+                    <h2>Frequent Questions</h2>
+                    <h3 id="first-question" style="cursor:pointer;">+ ¿How can I create a new Budget?</h3>
+                    <div id="first-question-answer" style="display:none;">
+                        <h4>Answer.</h4>
+                        <p>Click on the new option, wich is on the menu bar or Create New Button on the Home</p>
+                        <img style="width: 100%;" src="./img/frequent-questions/buttons.PNG" alt="buttons" />
+                        <p>You'll see the form where you can fill the next information:</p>
+                        <ul>
+                            <li>Year</li>
+                            <li>Month</li>
+                            <li>Salary</li>
+                            <li>Amount to Save. (If you want to add it)</li>
+                            <li>Additional Incomes. (If you have any Additional Incomes)</li>
+                        </ul>
+                        <img style="width: 100%" src="./img/frequent-questions/basics-form.PNG" alt="Basic Forms" />
+                        <p>You must add your fixed.</p>
+                        <img style="width: 100%" src="./img/frequent-questions/expenses.PNG" alt="Expenses" />
+                        <p>Add the end, you can add additional expenses as tags</p>
+                        <img style="width: 100%" src="./img/frequent-questions/tags.PNG" alt="Tags" />
+                        <p>Automatically, it'll show you the current month's budget</p>
+                        <img style="width: 100%" src="./img/frequent-questions/budget.PNG" alt="budget" />
+                    </div>
+                    <hr>
+                    <h3 id="second-question" style="cursor:pointer;">+ ¿How must the password be?</h3>
+                    <div id="second-question-answer" style="display:none; cursor:pointer;">
+                        <h4>Answer.</h4>
+                        <p>The password musn't be less than 8 charaters</p>
+                    </div>
+                    <hr>
+                    <h3 id="third-question" style="cursor:pointer;">+ ¿How can I register the daily expenses?</h3>
+                    <div id="third-question-answer" style="display:none;">
+                        <h4>Answer.</h4>
+                        <p>Tags</p>
+                    </div>
+                    <hr>
+                    <h3 id="fourth-question" style="cursor:pointer;">+ After I deleted the account, ¿Can I restore it?</h3>
+                    <div id="fourth-question-answer" style="display:none; cursor:pointer;">
+                        <h4>Answer.</h4>
+                        <p>You can ask for the activation through Contact us option</p>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </body>
+    <script src="../js/login.js"></script>
+    <footer>
+        <p>Copyright &copy; 2023 Budget, All rights Reserved</p>
+    </footer>
+</html>

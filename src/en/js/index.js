@@ -1,25 +1,116 @@
+const host = 'http://localhost:8080';
+const currentPage = window.location.href;
+let isHealthy = false;
+let token = '';
+var budget = {};
+var budgets = [];
+var contAE = 0;
+var userInfo = {};
+
+const months = [
+    'January',
+    'Febrery',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'December'
+];
+
+const checkAPI = () => {
+    fetch(host + '/users/')
+        .then(result => {
+            return result.json();
+        })
+        .then(res => {
+            if (res.message === 'Healthy') {
+                isHealthy = true;
+                checkLogin();
+                return true;
+            }
+
+            console.log("Error, API is not running");
+        })
+        .catch(err => {
+            console.log(err);
+        });
+};
+
+checkAPI();
+
+const checkLogin = () => {
+    localToken = localStorage.getItem('token');
+    localIsLogged = localStorage.getItem('isLogged');
+    if (localIsLogged === null) {
+        const newPage = currentPage.replace("/index.html", "/views/login.html");
+        window.location.replace(newPage);
+    } else {
+        token = localToken;
+        getBudgets();
+    }
+}
+
+// logout
+const logoutButton = document.getElementById('logout');
+
+const logoutFunction = () => {
+    fetch(host + '/users/logout', {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify({
+            token: token
+        })
+    })
+    .then(result => {
+        return result.json();
+    })
+    .then(res => {
+        if (res.message === 'success') {
+            localStorage.removeItem('isLogged');
+            localStorage.removeItem('token');
+            const newPage = currentPage.replace("/index.html", "/views/login.html");
+            window.location.replace(newPage);
+        }
+    })
+    .catch(err => {
+        console.log(err);
+    });
+};
+
+logoutButton.addEventListener('click', logoutFunction);
+
+
 // Redirect to another language page
 const selectElement = document.getElementById('select-language');
 
 selectElement.addEventListener('change', () => {
-    const currentPage = window.location.href;
-    if (selectElement.value === "es") {
-        const newPage = currentPage.replace("/en", "/es");
+    if (selectElement.value === "en") {
+        const newPage = currentPage.replace("/es", "/en");
         window.location.replace(newPage);
     }
 });
 
 // Get Budget
-var budget = {};
-var budgets = [];
-var contAE = 0;
-
 const getBudgets = () => {
-    fetch('http://localhost:80/budget/budgets')
+    fetch(host + '/budget/budgets', {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
+        },
+        method: 'GET'
+    })
         .then(result => {
             return result.json();
         })
         .then(res => {
+            userInfo = res.user[0];
+            jQuery("#username").html(userInfo.username);
             if (res.budgets.length > 0) {
                 budgets = res.budgets;
                 renderBudgets();
@@ -42,7 +133,7 @@ const renderBudgets = () => {
         div.id = budgets[budget]._id;
         div.addEventListener('click', getBudgetById);
         const h4 = document.createElement('h4');
-        h4.textContent = budgets[budget].basics.month;
+        h4.textContent = budgets[budget].month;
 
         div.append(h4);
 
@@ -53,7 +144,13 @@ const renderBudgets = () => {
 const getBudgetById = (event) => {
     const id = event.target.id;
     console.log(id);
-    fetch('http://localhost:80/budget/budget/'+id)
+    fetch(host + '/budget/budget/'+id, {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer '+token
+        },
+        method: 'GET'
+    })
         .then(result => {
             return result.json();
         })
@@ -62,6 +159,7 @@ const getBudgetById = (event) => {
                 budget = res.budget;
                 renderBudget();
                 renderGraphic();
+                showBudget();
                 return;
             }
 
@@ -72,10 +170,14 @@ const getBudgetById = (event) => {
         });
 };
 
-getBudgets();
-
 const getBudget = () => {
-    fetch('http://localhost:80/budget/')
+    fetch(host + '/budget/', {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer '+token
+        },
+        method: 'GET'
+    })
         .then(result => {
             return result.json();
         })
@@ -84,6 +186,7 @@ const getBudget = () => {
                 budget = res.budget[0];
                 renderBudget();
                 renderGraphic();
+                showBudget();
                 return;
             }
 
@@ -100,6 +203,21 @@ const showEmpty = () => {
 
     empty.style.display = 'block';
     budget.style.display = 'none';
+
+    const emptyBudget = document.getElementById('month-year-budget');
+    const date = new Date();
+    month = date.getMonth();
+    year = date.getFullYear();
+    emptyBudget.innerHTML = ' ' + months[month] + ' - ' + year;
+};
+
+const showBudget = () => {
+    console.log('Here');
+    const empty = document.getElementById("empty-budgeting");
+    const budget = document.getElementById("budgeting-main");
+
+    empty.style.display = 'none';
+    budget.style.display = 'flex';
 };
 
 const renderBudget = (res) => {
@@ -107,8 +225,8 @@ const renderBudget = (res) => {
 
     const basicInformation = document.getElementById('basic-information');
 
-    const year =  budget.basics.year;
-    const month = budget.basics.month;
+    const year =  budget.year;
+    const month = budget.month;
     const salary = budget.basics.salary;
     const save = budget.basics.save;
     const additionalIncome = budget.basics.additionalIncome;
@@ -149,7 +267,7 @@ const renderBudget = (res) => {
     if (additionalIncome !== '0') {
         const trIncome = document.createElement('tr');
         const tdIncome = document.createElement('td');
-        tdIncome.textContent = 'Adittional Income';
+        tdIncome.textContent = 'Additional Income';
         const tdIAmount = document.createElement('td');
         tdIAmount.textContent = additionalIncome;
         trIncome.append(tdIncome);
@@ -266,16 +384,16 @@ const renderGraphic = () => {
     google.charts.setOnLoadCallback(drawChart);
 
     const budgetData = [];
-    let availableAmount = +budget.basics.salary;
-
-    budgetData[0] = ['Item', 'amount'];
+    let availableAmount = budget.basics.salary;
     if (budget.basics.additionalIncome !== '0') {
         availableAmount = +budget.basics.salary + +budget.basics.additionalIncome;
     }
 
+    budgetData[0] = ['Item', 'amount'];
+
     let next = 2;
     if (budget.basics.save !== '0') {
-        budgetData[next] = ['save', +budget.basics.save];
+        budgetData[next] = ['Save', +budget.basics.save];
         availableAmount = +availableAmount - +budget.basics.save;
         next++;
     }
@@ -297,8 +415,9 @@ const renderGraphic = () => {
             next++;
         }
     }
-    
+
     budgetData[1] = ['Available Amount', +availableAmount];
+    console.log(budgetData);
 
     function drawChart() {
 
@@ -439,9 +558,25 @@ buttonNext.addEventListener('click', async () => {
     }
 
     if (validate === '') {
+        order = {
+            enero: '1',
+            febrero: '2',
+            marzo: '3',
+            abril: '4',
+            mayo: '5',
+            junio: '6',
+            julio: '7',
+            agosto: '8',
+            septiembre: '9',
+            octubre: '10',
+            noviembre: '11',
+            diciembre: '12'
+        };
+
+        budgeting.order = order[month.toLowerCase()];
+        budgeting.year = year;
+        budgeting.month = month;
         budgeting.basics = {
-            year,
-            month,
             salary,
             save,
             additionalIncome
@@ -464,7 +599,7 @@ buttonNext.addEventListener('click', async () => {
     if (visitedExpenses > 1 && !newExpenses) {
         const expenseErrorMessage = document.getElementById('expense-error');
         expenseErrorMessage.style.display = 'block';
-        expenseErrorMessage.innerHTML = 'All the fields are required';
+        expenseErrorMessage.innerHTML = 'All the Fields are Required';
         return;
     }
     
@@ -487,7 +622,7 @@ buttonNext.addEventListener('click', async () => {
     if (visitedTags > 1 && !newTags) { 
         const tagsErrorMessage = document.getElementById('tags-error');
         tagsErrorMessage.style.display = 'block';
-        tagsErrorMessage.innerHTML = 'All the tags are required';
+        tagsErrorMessage.innerHTML = 'All the Tags are Required';
         return;
     }
 
@@ -496,10 +631,11 @@ buttonNext.addEventListener('click', async () => {
     }
 
     if (budgeting.tags) {
-        const response  = await fetch('http://localhost:80/budget/create', {
+        const response  = await fetch(host + '/budget/create', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
             },
             body: JSON.stringify(budgeting)
         });
@@ -520,11 +656,11 @@ buttonCancel.addEventListener('click', () => {
 // Validate forms
 const validateBasicForm = (year, month, salary, checkboxSave, checkboxAdditionalIncome, save, additionalIncome) => {
     if (year === '') {
-        return "Year is required";
+        return "Year is Required";
     }
 
     if (month === '') {
-        return 'Month is required';
+        return 'Month is Required';
     }
 
     if (salary === '0') {
@@ -632,10 +768,11 @@ addTags.addEventListener('click', () => {
 });            
 
 const updateBudget = async () => {
-    const response = await fetch('http://localhost:80/budget/update/'+budget._id, {
+    const response = await fetch(host + '/budget/update/'+budget._id, {
         method: 'PUT',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer '+token
         },
         body: JSON.stringify(budget)
     });
@@ -680,3 +817,309 @@ const cleanBudget = () => {
     const formAdditionalExpenses = document.getElementById("form-additional-expenses");
     formAdditionalExpenses.innerHTML = '';
 };
+
+// show modules
+const hideModules = () => {
+    jQuery("#second-part").html('');
+    jQuery("#all-budgeting").hide();
+    jQuery("#empty-budgeting").hide();
+    jQuery("#budgeting-main").hide();
+    jQuery("#edit-user-info").hide();
+    jQuery("#contact-us-info").hide();
+    jQuery("#frequent-questions-info").hide();
+}
+
+jQuery("#principal").on('click', () => {
+    hideModules();
+    jQuery("#all-budgeting").show();
+    if (budgets.length > 0) {
+        jQuery("#budgeting-main").show();
+    }else {
+        jQuery("#empty-budgeting").show();
+    }
+});
+
+jQuery("#username").on('click', () => {
+    hideModules();
+    jQuery("#edit-user-info").show();
+    jQuery("#second-part").html(' > Profile');
+
+    jQuery("#user-name").html(userInfo.name + ' ' + userInfo.lastname);
+    jQuery("#name").val(userInfo.name);
+    jQuery("#lastname").val(userInfo.lastname);
+    jQuery("#username-form").val(userInfo.username);
+    jQuery("#email").val(userInfo.email);
+});
+
+jQuery("#contact-us").on('click', () => {
+    hideModules();
+    jQuery("#contact-us-info").show();
+    jQuery("#second-part").html(' > Contact us');
+});
+
+jQuery("#frequent-questions").on('click', () => {
+    hideModules();
+    jQuery("#second-part").html(' > Frequent Questions');
+    jQuery("#frequent-questions-info").show();
+});
+
+// show forms
+const hideForms = () => {
+    jQuery("#basic-form").hide();
+    jQuery("#password-form").hide();
+    jQuery("#setup-form").hide();
+    jQuery("#delete-form").hide();
+}
+
+jQuery("#btn-user-info").on('click', () => {
+    hideForms();
+    jQuery("#basic-form").show();
+});
+
+jQuery("#btn-password").on('click', () => {
+    hideForms();
+    jQuery("#password-form").show();
+});
+
+jQuery("#btn-setup").on('click', () => {
+    hideForms();
+    jQuery("#setup-form").show(); 
+});
+
+jQuery("#btn-delete").on('click', () => {
+    hideForms();
+    jQuery("#delete-form").show();
+});
+
+
+// User updates
+jQuery("#update-user-basic").on('click', () => {
+    const name = jQuery("#name").val();
+    const lastname = jQuery("#lastname").val();
+    const username = jQuery("#username-form").val();
+    const email = jQuery("#email").val();
+    let validated = true;
+
+    if (name === '') {
+        jQuery("#label-error-name").show();
+        validated = false;
+    }
+
+    if (lastname === '') {
+        jQuery("#label-error-lastname").show();
+        validated = false;
+    }
+
+    if (username === '') {
+        jQuery("#label-error-username").show();
+        validated = false;
+    }
+
+    if (email === '') {
+        jQuery("#label-error-email").show();
+        validated = false;
+    }
+
+    if (validated) {
+        fetch(host + '/users/update_user', {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token 
+            },
+            method: 'PUT',
+            body: JSON.stringify({
+                name,
+                lastname,
+                username,
+                email
+            })
+        })
+        .then(result => {
+            return result.json();
+        })
+        .then(res => {
+            console.log(res);
+            jQuery("#label-success-basics").show();
+        })
+        .catch(err => {
+            console.log(err);
+        });
+    }
+});
+
+jQuery("#update-user-password").on('click', () => {
+    const currentPassword = jQuery("#current-password").val(); 
+    const newPassword = jQuery("#new-password").val();
+    const confirmPassword = jQuery("#confirm-password").val();
+    let validated = true;
+
+    if (currentPassword === '') {
+        jQuery("#label-error-current-password").show();
+        validated = false;
+    }
+
+    if (newPassword === '') {
+        jQuery("#label-error-new-password").show();
+        validated = false;
+    }
+
+    if (confirmPassword === '') {
+        jQuery("#label-error-confirm-password").show();
+        validated = false;
+    }
+
+    if (newPassword !== confirmPassword) {
+        jQuery("#label-error-not-similar").show();
+        validated = false;
+    }
+
+    if(validated) {
+        fetch(host + '/users/update_password', {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            },
+            method: 'PUT',
+            body: JSON.stringify({
+                email: userInfo.email,
+                currentPassword,
+                newPassword
+            })
+        })
+        .then(result => {
+            return result.json();
+        })
+        .then(res => {
+            if (res.message === 'success') {
+                jQuery("#label-success-password").show();
+            }
+        })
+        .catch(err => {
+            console.log(err);
+        });
+    }
+});
+
+jQuery("#delete-account-btn").on('click', () => {
+    fetch(host + '/users/delete', {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
+        },
+        method: 'DELETE',
+        body: JSON.stringify({
+            email: userInfo.email
+        })
+    })
+    .then(result => {
+        return result.json();
+    })
+    .then(res => {
+        if (res.message === 'success') {
+            logoutFunction();
+        }
+    })
+    .catch(err => {
+        console.log(err);
+    });
+});
+
+// show and hide answers
+const hideAnswers = () => {
+    jQuery("#first-question-answer").hide();
+    jQuery("#second-question-answer").hide();
+    jQuery("#third-question-answer").hide();
+    jQuery("#fourth-question-answer").hide();
+}
+
+let firstQuestion = 0;
+jQuery("#first-question").on('click', () => {
+    hideAnswers();
+    if (firstQuestion === 0) {
+        jQuery("#first-question-answer").show();
+        firstQuestion = 1;
+    } else {
+        firstQuestion = 0;
+    }
+});
+
+let secondQuestion = 0;
+jQuery("#second-question").on('click', () => {
+    hideAnswers();
+    if (secondQuestion === 0) {
+        jQuery("#second-question-answer").show();
+        secondQuestion = 1;
+    } else {
+        secondQuestion = 0;
+    }
+});
+
+let thirdQuestion = 0;
+jQuery("#third-question").on('click', () => {
+    hideAnswers();
+    if (thirdQuestion === 0) {
+        jQuery("#third-question-answer").show();
+        thirdQuestion = 1;
+    } else {
+        thirdQuestion = 0;
+    }
+});
+
+let fourthQuestion = 0;
+jQuery("#fourth-question").on('click', () => {
+    hideAnswers();
+    if (fourthQuestion === 0) {
+        jQuery("#fourth-question-answer").show();
+        fourthQuestion = 1;
+    } else {
+        fourthQuestion = 0;
+    }
+});
+
+// contact us
+jQuery("#send-message").on('click', () => {
+    const email = jQuery("#user-email").val();
+    const subject = jQuery("#subject").val();
+    const message = jQuery("#message").val();
+    let validated = true;
+
+    if (email === '') {
+        jQuery("#label-error-email-mail").show();
+        validated = false;
+    }
+
+    if (subject === '') {
+        jQuery("#label-error-subject").show();
+        validated = false;
+    }
+
+    if (message === '') {
+        jQuery("#label-error-message").show();
+        validated = false;
+    }
+
+    if (validated) {
+        fetch(host + '/users/send', {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({
+                email,
+                subject,
+                message
+            })
+        })
+        .then(result => {
+            return result.json();
+        })
+        .then(res => {
+            if (res.message === 'success') {
+                jQuery("#label-success-mail").show();
+            }
+        })
+        .catch(err => {
+            console.log(err);
+        });
+    }
+});

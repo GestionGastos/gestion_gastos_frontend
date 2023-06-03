@@ -282,7 +282,7 @@ body {
 
 .img-circle {
   border-radius: 50%;
-  width: 100%;
+  width: 50%;
 }
 
 footer {
@@ -291,8 +291,11 @@ footer {
   font-size: 12px;
   text-align: center;
   padding: 5px;
-  position: relative;
+  position: fixed;
+  left: 0;
+  bottom: 0;
   z-index: 100;
+  width: 100%;
 }
 
 /*Curriculum styles*/
@@ -579,4 +582,25 @@ footer {
   padding: 0.2rem;
   margin: 0.2rem;
   cursor: pointer;
+}
+
+.submenu {
+  margin: 1rem;
+  color: blue;
+  text-decoration: none;
+}
+
+.submenu a {
+  cursor: pointer;
+}
+
+.label-error {
+  color: red;
+  font-size: 10px;
+}
+
+.label-success {
+  color: green;
+  font-size: 10px;
+  text-align: center;
 }

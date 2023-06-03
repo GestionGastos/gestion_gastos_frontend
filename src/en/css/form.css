@@ -61,6 +61,23 @@ form {
     background-color: blue;
 }
 
+.btn-delete {
+    width: 30%;
+    padding: 1rem 0;
+    background-color: white;
+    color: red;
+    border: 1px solid red;
+    border-radius: 50px;
+    cursor: pointer;
+    font-family: 'Pacifico', 'Poppins', sans-serif;
+}
+
+.btn-delete:hover {
+    border: 1px solid red;
+    color: white;
+    background-color: red;
+}
+
 .cancel {
     width: 30%;
     padding: 1rem 0;
@@ -100,5 +117,20 @@ form {
 
 .hide-form {
     display: none;
+}
+
+.btn-setup {
+    margin: 0.5rem;
+    padding: 0.5rem;
+    border-color: transparent;
+    width: 90%;
+    background-color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-setup:hover,
+.btn-setup.active {
+    background-color: #f0f0f0;
 }
   

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="./css/fonts.css" >
     <link rel="stylesheet" href="./css/index.css" >
     <link rel="stylesheet" href="./css/form.css">
+    <script src="./lib/jquery-3.7.0.min.js"></script>
 </head>
 <body id="body">
     <nav class="header__nav-vertical">
@@ -22,7 +23,7 @@
             <div class="horizontal-menu-left">
                 <ul class="header__item-list-horizontal">
                     <li class="header__items-horizontal">
-                        <h2 class="page-title">Budgeting</h2>
+                        <h2 class="page-title">Budget</h2>
                     </li>
                     <li class="header__items-horizontal">
                         <a href="#" id="create-budget">New</a>
@@ -31,6 +32,20 @@
             </div>
             <div class="horizontal-menu-right">
                 <ul class="header__item-list-horizontal">
+                    <li class="header__items-horizontal">
+                        <a href="#" id="frequent-questions">Questions</a>
+                    </li>
+                    <li class="header__items-horizontal">
+                        <a href="#" id="contact-us">Contact us</a>
+                    </li>
+                    <li class="header__items-horizontal">
+                        <a href="#" id="username"></a>
+                    </li>
+                    <li class="header__items-horizontal">
+                        <a href="#" id="logout">
+                            Logout
+                        </a>
+                    </li>
                     <li class="header__items-horizontal">
                         <select id="select-language">
                             <option value="en">en</option>
@@ -60,11 +75,11 @@
             <div class="forms">
                 <form id="form-basic">
                     <span id="basic-error" class="error-message"></span>
-                    <h3>Basic information</h3>
+                    <h3>Basic Information</h3>
                     <div class="form-control">
                         <label for="year">Year</label>
                         <select id="year">
-                            <option value="">-- Select a Year --</option>
+                            <option value="">-- Select a year --</option>
                             <option value="2020">2020</option>
                             <option value="2021">2021</option>
                             <option value="2022">2022</option>
@@ -74,9 +89,9 @@
                     <div class="form-control">
                         <label for="month">Month</label>
                         <select id="month">
-                            <option value="">-- Select a month --</option>
+                            <option value="">-- Select a Month --</option>
                             <option value="January">January</option>
-                            <option value="Febrary">Febrary</option>
+                            <option value="Febrery">Febrery</option>
                             <option value="March">March</option>
                             <option value="April">April</option>
                             <option value="May">May</option>
@@ -97,11 +112,11 @@
                         <input type="checkbox" id="check-save" name="check-save" onclick="checkSave()"/> Do you want to add an amount to save?
                     </div>
                     <div style="display: none;" class="form-control" id="save-field">
-                        <label for="save">Save</label>
+                        <label for="save">Amount to Save</label>
                         <input type="number" id="save" name="save" value="0" />
                     </div>
                     <div>
-                        <input type="checkbox" id="check-additional-income" name="check-additional-income" onclick="checkAdditionalIncome()"/> Do you have additional incomes?
+                        <input type="checkbox" id="check-additional-income" name="check-additional-income" onclick="checkAdditionalIncome()"/> Do you have any additional income?
                     </div>
                     <div style="display: none;" class="form-control" id="additional-income-field">
                         <label for="additional-income">Additional Income</label>
@@ -112,7 +127,7 @@
                     <form id="form-expenses">
                         <span id="expense-error" class="error-message"></span>
                         <h3>Expenses</h3>
-                        <p>Please, add all the expenses, this expenses are fixed e.g.(Rent, Internet, ...)</p>
+                        <p>Please, Add all the fixed expenses (Rent, Internet, ...)</p>
                         <div class="horizontal-form">
                             <div class="form-control">
                                 <label for="expense">Expense</label>
@@ -130,9 +145,9 @@
                     <form id="form-tags">
                         <span id="tags-error" class="error-message"></span>
                         <h3>Tags</h3>
-                        <p>Create tags for additional expenses, e.g. (Taxis, Mall, Books, ...)</p>
+                        <p>Add tags for the additional expenses, e.g. (Taxis, Coffee, Books, ...)</p>
                         <div class="form-control">
-                            <label for="tag">Tag</label>
+                            <label for="tag">Tag Name</label>
                             <input type="text" id="tag" name="tags" />
                         </div>
                     </form>
@@ -144,16 +159,20 @@
         </div>
     </div>
 
+    <div id="submenu" class="submenu">
+        <a id="principal">Home</a><span id="second-part"></span>
+    </div>
+
     <main id="all-budgeting" class="budgets">
-        <h3>Budgets 2023</h3>
-        <p id="budgets-error">Any Budget was Found</p>
+        <h3>Budget 2023</h3>
+        <p id="budgets-error">No Bugets Found</p>
         <div id="budgets">
 
         </div>
     </main>
 
     <main id="empty-budgeting" class="empty-container">
-        <p>Budgeting not Found</p>
+        <p>No Budget Found <span id="month-year-budget"></span></p>
         <button id="create-new-budget" class="btn">Create New</button>
     </main>
 
@@ -164,7 +183,7 @@
                 
             </section>
             <section class="card-budgeting">
-                <h3>Expenses</h3>
+                <h3>expenses</h3>
                 <form id="expenses-form">
                 </form>
             </section>
@@ -185,8 +204,185 @@
             </section>
         </div>
     </main>
+
+    <main id="edit-user-info" class="curriculum-main" style="display:none;">
+        <div class="column-25">
+            <section id="user-basic-information" class="card-budgeting" style="text-align: center;">
+                <img class="img-circle" src="./img/user/default.png" alt="user-image"/>
+                <h3 id="user-name">User name</h3>
+            </section>
+            
+            <section id="user-options" class="card-budgeting">
+                <button id="btn-user-info" type="button" class="btn-setup active">Basic Information</button><br>
+                <button id="btn-password" type="button" class="btn-setup">Password</button>
+                <button id="btn-setup" type="button" class="btn-setup">Configuration</button>
+                <button id="btn-delete" type="button" class="btn-setup">Delete Account</button>
+            </section>
+        </div>
+
+        <div class="column-73">
+            <section id="user-basic-info-form" class="card-budgeting">
+                <div id="basic-form">
+                    <h2>Basic Information</h2>
+                    <label id="label-success-basics" class="label-success" style="display:none;">Information Updated</label>
+                    <form>
+                        <div class="form-control">
+                            <label for="name">Name</label>
+                            <label id="label-error-name" class="label-error" style="display:none;">Name is Required</label>
+                            <input type="text" id="name" name="name" /> 
+                        </div>
+                        <div class="form-control">
+                            <label for="latname">Last Name</label>
+                            <label id="label-error-lastname" class="label-error" style="display:none;">Last Name is Required</label>
+                            <input type="text" id="lastname" name="lastname" /> 
+                        </div>
+                        <div class="form-control">
+                            <label for="username">Username</label>
+                            <label id="label-error-username" class="label-error" style="display:none;">Username is Required</label>
+                            <input type="text" id="username-form" name="username" /> 
+                        </div>
+                        <div class="form-control">
+                            <label for="email">E-Mail</label>
+                            <label id="label-error-email" class="label-error" style="display:none;">E-Mail is Required</label>
+                            <input type="text" id="email" name="email" /> 
+                        </div>
+                        <button id="update-user-basic" type="button" class="btn">Update</button>
+                    </form>
+                </div>
+                <div id="password-form" style="display:none;">
+                    <h2>Password</h2>
+                    <form>
+                        <label id="label-success-password" class="label-success" style="display:none;">Password Updated</label>
+                        <div class="form-control">
+                            <label>Current Password</label>
+                            <label id="label-error-current-password" class="label-error" style="display:none;">Current Password is Required</label>
+                            <input type="password" id="current-password" name="current-password" placeholder="Current Contraseña" />
+                        </div>
+                        <div class="form-control">
+                            <label>New Password</label>
+                            <label id="label-error-new-password"class="label-error" style="display:none;">New Password is Required</label>
+                            <input type="password" id="new-password" name="password" placeholder="New Contraseña" />
+                        </div>
+                        <div class="form-control">
+                            <label>Confirm Password</label>
+                            <label id="label-error-confirm-password" class="label-error" style="display:none;">Confirm the password</label>
+                            <label id="label-error-not-similar" class="label-error" style="display:none;">Password doesn't match</label>
+                            <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm Password" />
+                        </div>
+                        <button id="update-user-password" type="button" class="btn">Update</button>
+                    </form>
+                </div>
+                <div id="setup-form" style="display:none;">
+                    <h2>Configuration</h2>
+                    <form>
+                        <p>Close the session after: </p>
+                        <select id="close-session">
+                            <option value="">-- Select --</option>
+                            <option value="2">2 min</option>
+                            <option value="5">5 min</option>
+                            <option value="10">10 min</option>
+                            <option value="20">20 min</option>
+                        </select>
+                    </form>
+                </div>
+                <div id="delete-form" style="display:none;">
+                    <h2>Delete Account</h2>
+                    <form>
+                        <p>¿Do you want to delete your account?, The information will keep saved on our database</p>
+                        <button class="btn-delete" id="delete-account-btn">Delete Account</button>
+                    </form>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <main id="contact-us-info" class="curriculum-main" style="display:none;">
+        <div class="column-25">
+            <h2>Team</h2>
+            <p>Ingrid Lissette Gomez Arias</p>
+            <p>Daniel Pineda</p>
+            <p>Hedilberto Vásquez Mayor</p>
+            <p>Santiago Quevedo</p>
+        </div>
+        <div class="column-73">
+            <section id="contact-us-form" class="card-budgeting">
+                <h2>Contact us</h2>
+                <p>Do you have a suggection, pettion, complaint, claim or improve? let us know</p>
+                <form>
+                    <label id="label-success-mail" class="label-success" style="display:none;">The E-Mail was sent</label>
+                    <div class="form-control">
+                        <h3>To: gestion.control.gastos@gmail.com</h3>
+                    </div>
+                    <div class="form-control">
+                        <label>E-Mail</label>
+                        <label id="label-error-email-mail" class="label-error" style="display:none;">E-Mail is Required</label>
+                        <input type="email" id="user-email" name="user-email" placeholder="email@ejemplo.com" /> 
+                    </div>
+                    <div class="form-control">
+                        <label>Subject</label>
+                        <label id="label-error-subject" class="label-error" style="display:none;">Subject is Required</label>
+                        <input type="text" id="subject" name="subject" placeholder="Example: (Complaint ..., Petition ..., etc ...)" />
+                    </div>
+                    <div class="form-control">
+                        <label>Message</label>
+                        <label id="label-error-message" class="label-error" style="display:none;">Message is Required</label>
+                        <textarea id="message" name="message" placeholder="Write us your message ..."></textarea> 
+                    </div>
+                    <button id="send-message" type="button" class="btn">Send</button>
+                </form>
+            </section>
+        </div>
+    </main>
+
+    <main id="frequent-questions-info" class="curriculum-main" style="display:none;">
+        <div class="column-100">
+            <section id="questions" class="card-budgeting">
+                <h2>Frequent Questions</h2>
+                <h3 id="first-question" style="cursor:pointer;">+ ¿How can I create a new Budget?</h3>
+                <div id="first-question-answer" style="display:none;">
+                    <h4>Answer.</h4>
+                    <p>Click on the new option, wich is on the menu bar or Create New Button on the Home</p>
+                    <img style="width: 100%;" src="./img/frequent-questions/buttons.PNG" alt="buttons" />
+                    <p>You'll see the form where you can fill the next information:</p>
+                    <ul>
+                        <li>Year</li>
+                        <li>Month</li>
+                        <li>Salary</li>
+                        <li>Amount to Save. (If you want to add it)</li>
+                        <li>Additional Incomes. (If you have any Additional Incomes)</li>
+                    </ul>
+                    <img style="width: 100%" src="./img/frequent-questions/basics-form.PNG" alt="Basic Forms" />
+                    <p>You must add your fixed.</p>
+                    <img style="width: 100%" src="./img/frequent-questions/expenses.PNG" alt="Expenses" />
+                    <p>Add the end, you can add additional expenses as tags</p>
+                    <img style="width: 100%" src="./img/frequent-questions/tags.PNG" alt="Tags" />
+                    <p>Automatically, it'll show you the current month's budget</p>
+                    <img style="width: 100%" src="./img/frequent-questions/budget.PNG" alt="budget" />
+                </div>
+                <hr>
+                <h3 id="second-question" style="cursor:pointer;">+ ¿How must the password be?</h3>
+                <div id="second-question-answer" style="display:none; cursor:pointer;">
+                    <h4>Answer.</h4>
+                    <p>The password musn't be less than 8 charaters</p>
+                </div>
+                <hr>
+                <h3 id="third-question" style="cursor:pointer;">+ ¿How can I register the daily expenses?</h3>
+                <div id="third-question-answer" style="display:none;">
+                    <h4>Answer.</h4>
+                    <p>Tags</p>
+                </div>
+                <hr>
+                <h3 id="fourth-question" style="cursor:pointer;">+ After I deleted the account, ¿Can I restore it?</h3>
+                <div id="fourth-question-answer" style="display:none; cursor:pointer;">
+                    <h4>Answer.</h4>
+                    <p>You can ask for the activation through Contact us option</p>
+                </div>
+            </section>
+        </div>
+    </main>
+
     <footer>
-        <p>Copyright &copy; 2023 Wellness, All Rights Reserved</p>
+        <p>Copyright &copy; 2023 Budget, Al rights Reserved</p>
     </footer>
     </body>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
