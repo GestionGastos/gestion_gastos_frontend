@@ -35,7 +35,8 @@ const checkAPI = () => {
             console.log("Error, the API is not running");
         })
         .catch(err => {
-            console.log(err);
+            const newPage = currentPage.replace("/index.html", "/views/login.html");
+            window.location.replace(newPage);
         });
 };
 

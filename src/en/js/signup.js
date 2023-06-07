@@ -17,6 +17,16 @@ const homeElement = document.getElementById('home');
 
 homeElement.style.backgroundImage = 'url(../img/background-'+random+'.jpg)';
 
+// Redirect to another language page
+const selectElement = document.getElementById('select-language');
+
+selectElement.addEventListener('change', () => {
+    if (selectElement.value === "es") {
+        const newPage = currentPage.replace("/en", "/es");
+        window.location.replace(newPage);
+    }
+});
+
 // Check the session
 let isLogged = localStorage.getItem('isLogged');
 
@@ -150,23 +160,102 @@ jQuery("#principal").on('click', () => {
     jQuery("#signup-form").show();
 });
 
-// Close session setup
-jQuery("#close-session").on('change', () => {
-    const closeSession = jQuery("#close-session").val('close-session');
+// show and hide answers
+const hideAnswers = () => {
+    jQuery("#first-question-answer").hide();
+    jQuery("#second-question-answer").hide();
+    jQuery("#third-question-answer").hide();
+    jQuery("#fourth-question-answer").hide();
+}
 
-    if (closeSession === '') {
-        closeSession = 0;
+let firstQuestion = 0;
+jQuery("#first-question").on('click', () => {
+    hideAnswers();
+    if (firstQuestion === 0) {
+        jQuery("#first-question-answer").show();
+        firstQuestion = 1;
+    } else {
+        firstQuestion = 0;
+    }
+});
 
+let secondQuestion = 0;
+jQuery("#second-question").on('click', () => {
+    hideAnswers();
+    if (secondQuestion === 0) {
+        jQuery("#second-question-answer").show();
+        secondQuestion = 1;
+    } else {
+        secondQuestion = 0;
+    }
+});
+
+let thirdQuestion = 0;
+jQuery("#third-question").on('click', () => {
+    hideAnswers();
+    if (thirdQuestion === 0) {
+        jQuery("#third-question-answer").show();
+        thirdQuestion = 1;
+    } else {
+        thirdQuestion = 0;
+    }
+});
+
+let fourthQuestion = 0;
+jQuery("#fourth-question").on('click', () => {
+    hideAnswers();
+    if (fourthQuestion === 0) {
+        jQuery("#fourth-question-answer").show();
+        fourthQuestion = 1;
+    } else {
+        fourthQuestion = 0;
+    }
+});
+
+// contact us
+jQuery("#send-message").on('click', () => {
+    const email = jQuery("#user-email").val();
+    const subject = jQuery("#subject").val();
+    const message = jQuery("#message").val();
+    let validated = true;
+
+    if (email === '') {
+        jQuery("#label-error-email-mail").show();
+        validated = false;
     }
 
-    fetch(host + '/users/setup', {
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + token
-        },
-        method: 'POST',
-        body: JSON.stringify({
-            closeSession
+    if (subject === '') {
+        jQuery("#label-error-subject").show();
+        validated = false;
+    }
+
+    if (message === '') {
+        jQuery("#label-error-message").show();
+        validated = false;
+    }
+
+    if (validated) {
+        fetch(host + '/users/send', {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({
+                email,
+                subject,
+                message
+            })
         })
-    })
+        .then(result => {
+            return result.json();
+        })
+        .then(res => {
+            if (res.message === 'success') {
+                jQuery("#label-success-mail").show();
+            }
+        })
+        .catch(err => {
+            console.log(err);
+        });
+    }
 });
