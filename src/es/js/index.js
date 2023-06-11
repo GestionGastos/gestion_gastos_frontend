@@ -5,6 +5,7 @@ var budget = {};
 var budgets = [];
 var contAE = 0;
 var userInfo = {};
+const host = 'http://localhost:8080';
 
 const months = [
     'Enero',
@@ -21,7 +22,7 @@ const months = [
 ];
 
 const checkAPI = () => {
-    fetch('http://localhost:80/users/')
+    fetch(host + '/users/')
         .then(result => {
             return result.json();
         })
@@ -58,7 +59,7 @@ const checkLogin = () => {
 const logoutButton = document.getElementById('logout');
 
 const logoutFunction = () => {
-    fetch('http://localhost:80/users/logout', {
+    fetch(host + '/users/logout', {
         headers: {
             'Content-Type': 'application/json'
         },
@@ -98,7 +99,7 @@ selectElement.addEventListener('change', () => {
 
 // Get Budget
 const getBudgets = () => {
-    fetch('http://localhost:80/budget/budgets', {
+    fetch(host + '/budget/budgets', {
         headers: {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + token
@@ -144,7 +145,7 @@ const renderBudgets = () => {
 const getBudgetById = (event) => {
     const id = event.target.id;
     console.log(id);
-    fetch('http://localhost:80/budget/budget/'+id, {
+    fetch(host + '/budget/budget/'+id, {
         headers: {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer '+token
@@ -171,7 +172,7 @@ const getBudgetById = (event) => {
 };
 
 const getBudget = () => {
-    fetch('http://localhost:80/budget/', {
+    fetch(host + '/budget/', {
         headers: {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer '+token
@@ -631,7 +632,7 @@ buttonNext.addEventListener('click', async () => {
     }
 
     if (budgeting.tags) {
-        const response  = await fetch('http://localhost:80/budget/create', {
+        const response  = await fetch(host + '/budget/create', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -768,7 +769,7 @@ addTags.addEventListener('click', () => {
 });            
 
 const updateBudget = async () => {
-    const response = await fetch('http://localhost:80/budget/update/'+budget._id, {
+    const response = await fetch(host + '/budget/update/'+budget._id, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
@@ -921,7 +922,7 @@ jQuery("#update-user-basic").on('click', () => {
     }
 
     if (validated) {
-        fetch('http://localhost:80/users/update_user', {
+        fetch(host + '/users/update_user', {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + token 
@@ -974,7 +975,7 @@ jQuery("#update-user-password").on('click', () => {
     }
 
     if(validated) {
-        fetch('http://localhost:80/users/update_password', {
+        fetch(host + '/users/update_password', {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + token
@@ -1001,7 +1002,7 @@ jQuery("#update-user-password").on('click', () => {
 });
 
 jQuery("#delete-account-btn").on('click', () => {
-    fetch('http://localhost:80/users/delete', {
+    fetch(host + '/users/delete', {
         headers: {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + token
@@ -1099,7 +1100,7 @@ jQuery("#send-message").on('click', () => {
     }
 
     if (validated) {
-        fetch('http://localhost:80/users/send', {
+        fetch(host + '/users/send', {
             headers: {
                 'Content-Type': 'application/json'
             },

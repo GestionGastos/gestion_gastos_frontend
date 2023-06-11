@@ -8,6 +8,7 @@ const labelErrorPassword = document.getElementById('label-error-password');
 const labelErrorConfirmPassword = document.getElementById('label-error-confirm-password');
 const labelErrorConfirmPasswordEmpty = document.getElementById('label-error-confirm-password-empty');
 const currentPage = window.location.href;
+const host = 'http://localhost:8080';
 
 // Random Background Image
 let random = Math.floor(Math.random() * 4);
@@ -97,7 +98,7 @@ jQuery("#signup").click(() => {
     }
 
     if (validated) {
-        fetch('http://localhost:80/users/signup', {
+        fetch(host + '/users/signup', {
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -234,7 +235,7 @@ jQuery("#send-message").on('click', () => {
     }
 
     if (validated) {
-        fetch('http://localhost:80/users/send', {
+        fetch(host + '/users/send', {
             headers: {
                 'Content-Type': 'application/json'
             },

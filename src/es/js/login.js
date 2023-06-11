@@ -3,6 +3,7 @@ const labelErrorInvalid = document.getElementById('label-error-invalid');
 const labelErrorEmail = document.getElementById('label-error-email');
 const labelErrorPassword = document.getElementById('label-error-password');
 const newPage = currentPage.replace("/views/login.html", "/index.html");
+const host = 'http://localhost:8080';
 
 let random = Math.floor(Math.random() * 4);
 
@@ -56,7 +57,7 @@ jQuery('#login').click(() => {
     }
 
     if (validated) {
-        fetch('http://localhost:80/users/login', {
+        fetch(host + '/users/login', {
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -199,7 +200,7 @@ jQuery("#send-message").on('click', () => {
     }
 
     if (validated) {
-        fetch('http://localhost:80/users/send', {
+        fetch(host + '/users/send', {
             headers: {
                 'Content-Type': 'application/json'
             },
