@@ -15,7 +15,7 @@ Creat una nueva red para conectar los contenedores de frontend y backend si la r
 - docker network create -d bridge budget-servers-network
 
 Ejecutar docker tun para crear el contenedor desde la ruta del proyecto (Execute docker run to create the container from the project root):
-- docker run -d -p 88:80 --name=budget-frontend -v $PWD/src:/usr/local/apache2/htdocs/ --network=budget-servers-network budget-frontend-server:v1
+- docker run -d -p 88:80 --name=budget-frontend -v C:\<your path>\gestion_gastos_frontend\src:/usr/local/apache2/htdocs/ --network=budget-servers-network budget-frontend-server:v1
 
 Para chequear el frontend usa las urls debajo (to checkt the frontend use the urls below):
 - Spanish version:
