@@ -19,6 +19,8 @@ Ejecutar docker tun para crear el contenedor desde la ruta del proyecto (Execute
 
 Para chequear el frontend usa las urls debajo (to checkt the frontend use the urls below):
 - Spanish version:
-http://localhost:88/es/views/login.html
+http://localhost:88/es/login.html
 - English version:
-http://localhost;:88/en/views/login.html
+http://localhost:88/en/login.html
+O directamente a la raiz del proyecto (Or directly on the project root):
+- HTTP://localhost:88/
