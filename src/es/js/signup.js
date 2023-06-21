@@ -259,3 +259,13 @@ jQuery("#send-message").on('click', () => {
         });
     }
 });
+
+jQuery("#show-password").on('click', () => {
+    if (jQuery("#show-password").is(':checked')) {
+        jQuery("#confirm-password").attr('type', 'text');
+        jQuery("#password").attr('type', 'text');
+    } else {
+        jQuery("#confirm-password").attr('type', 'password');
+        jQuery("#password").attr('type', 'password');
+    }
+});

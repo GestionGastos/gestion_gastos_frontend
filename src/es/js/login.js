@@ -224,3 +224,12 @@ jQuery("#send-message").on('click', () => {
         });
     }
 });
+
+jQuery("#show-password").on('click', () => {
+    
+    if (jQuery("#show-password").is(':checked')) {
+        jQuery("#password").attr('type', 'text');
+    } else {
+        jQuery("#password").attr('type', 'password');
+    }
+});

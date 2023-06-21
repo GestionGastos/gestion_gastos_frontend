@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget</title>
+    <link rel="stylesheet" href="../../css/fonts.css" >
+    <link rel="stylesheet" href="../../css/index.css" >
+    <link rel="stylesheet" href="../../css/form.css">
+    <script src="../../lib/jquery-3.7.0.min.js"></script>
+</head>
+<body id="body">
+    <nav class="header__nav-vertical">
+        <ul class="header__item-list-vertical">
+        </ul>
+    </nav>
+    <header class="header" id="home">
+        <nav class="header__nav-horizontal">
+            <div class="horizontal-menu-left">
+                <ul class="header__item-list-horizontal">
+                    <li class="header__items-horizontal">
+                        <h2 class="page-title">Budget</h2>
+                    </li>
+                    <li class="header__items-horizontal">
+                        <a href="#" id="show-users">Users</a>
+                    </li>
+                    <li class="header__items-horizontal">
+                        <a href="#" id="show-mails">Mails</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="horizontal-menu-right">
+                <ul class="header__item-list-horizontal">
+                    <li class="header__items-horizontal">
+                        <a href="#" id="logout">
+                            Logout
+                        </a>
+                    </li>
+                    <li class="header__items-horizontal">
+                        <select id="select-language">
+                            <option value="en">en</option>
+                            <option value="es">es</option>
+                        </select>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <div id="submenu" class="submenu">
+        <a id="principal">Principal</a><span id="second-part"></span>
+    </div>
+
+    <main class="budgets" id="users-main">
+        <h3>Users</h3>
+        <p id="users-error">No Users Found</p>
+        <div id="users">
+
+        </div>
+    </main>
+
+    <main class="budgets" id="mails-main" style="display:none;">
+        <h3>Mails</h3>
+        <p id="mails-error">No Mails Found</p>
+        <div id="mails">
+
+        </div>
+    </main>
+
+    <footer>
+        <p>Copyright &copy; 2023 Budget, All rights reserved</p>
+    </footer>
+</body>
+<script src="./js/admin.js"></script>
+</html>
