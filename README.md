@@ -22,5 +22,6 @@ Para chequear el frontend usa las urls debajo (to checkt the frontend use the ur
 http://localhost:88/es/login.html
 - English version:
 http://localhost:88/en/login.html
+
 O directamente a la raiz del proyecto (Or directly on the project root):
-- HTTP://localhost:88/
+- http://localhost:88/
