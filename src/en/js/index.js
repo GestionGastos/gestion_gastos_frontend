@@ -46,12 +46,19 @@ checkAPI();
 const checkLogin = () => {
     localToken = localStorage.getItem('token');
     localIsLogged = localStorage.getItem('isLogged');
+    localIsAdmin = localStorage.getItem('isAdmin');
+    
     if (localIsLogged === null) {
         const newPage = currentPage.replace("/index.html", "/login.html");
         window.location.replace(newPage);
     } else {
         token = localToken;
         getBudgets();
+
+        if (localIsAdmin === 'false') {
+            const adminTag = document.getElementById('admin-tag');
+            adminTag.style.display = 'none';
+        }
     }
 }
 
@@ -75,6 +82,7 @@ const logoutFunction = () => {
         if (res.message === 'success') {
             localStorage.removeItem('isLogged');
             localStorage.removeItem('token');
+            localStorage.removeItem('isAdmin');
             const newPage = currentPage.replace("/index.html", "/login.html");
             window.location.replace(newPage);
         }

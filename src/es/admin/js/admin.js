@@ -2,12 +2,28 @@ const host = 'http://localhost:8080';
 
 // check the session
 const currentPage = window.location.href;
-const newPage = currentPage.replace("/admin/admin.html", "/login.html");
-let isLogged = localStorage.getItem('isLogged');
+let newPage = currentPage.replace("/admin/admin.html", "/login.html");
+const isLogged = localStorage.getItem('isLogged');
+const isAdmin = localStorage.getItem('isAdmin');
 
 if (isLogged === null) {
     window.location.replace(newPage);
+} else {
+    if (isAdmin === 'false') {
+        newPage = currentPage.replace("/admin/admin.html", "/index.html");
+        window.location.replace(newPage);
+    }
 }
+
+// Redirect to another language page
+const selectElement = document.getElementById('select-language');
+
+selectElement.addEventListener('change', () => {
+    if (selectElement.value === "en") {
+        const newPage = currentPage.replace("/es", "/en");
+        window.location.replace(newPage);
+    }
+});
 
 // logout
 const logoutButton = document.getElementById('logout');
@@ -67,13 +83,18 @@ const getUsers = () => {
                             "</thead>" +
                             "<tbody>";
                     results.forEach(result => {
+                        const id = result._id;
                         html += "<tr>" +
                                     "<td>" + result.email + "</td>" +
                                     "<td>" + result.name + "</td>" +
                                     "<td>" + result.lastname + "</td>" +
-                                    "<td>" + result.username + "</td>" +
-                                    "<td><button type='button' class='btn-delete-table'>Eliminar</button>" +
-                                "<tr>";
+                                    "<td>" + result.username + "</td>";
+                        if (result.deleted === false) {
+                            html += "<td><button type='button' class='btn-delete-table' onclick='deleteUser(" + id + ");'>Eliminar</button>";
+                        } else {
+                            html += "<td><button type='button' onclick='enableUser(" + id + ");'>Habilitar</button>";
+                        }
+                        html += "<tr>";
                     });
                     html += "</tbody>" +
                         "</table>";
@@ -92,7 +113,6 @@ const getMails = () => {
         .then(res => {
             if (res.message === 'success') {
                 const results = res.result;
-                console.log(results);
                 if (results.length > 0) {
                     html = "<table cellspacing='0' class='table'>" +
                     "<thead>" +
@@ -105,11 +125,12 @@ const getMails = () => {
                     "</thead>" +
                     "<tbody>";
                     results.forEach(result => {
+                        const id = result._id;
                         html += "<tr>" +
                                 "<td>" + result.from + "</td>" +
                                 "<td>" + result.subject + "</td>" +
                                 "<td>" + result.message + "</td>" +
-                                "<td><button type='button' class='btn-delete-table'>Eliminar</button>" +
+                                "<td><button type='button' class='btn-delete-table' onclick='deleteMail(" + id + ");'>Eliminar</button>" +
                             "<tr>";
                     });
                     html += "</tbody>" +
@@ -139,3 +160,76 @@ jQuery("#show-mails").on('click', () => {
 
     jQuery("#mails-main").show();
 });
+
+// Enable and Delete
+const enableUser = (id) => {
+    fetch(host + '/admin/users/enable', {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token 
+        },
+        method: 'PUT',
+        body: JSON.stringify({
+            id
+        })
+    })
+        .then(result => {
+            return result.json();
+        })
+        .then(res => {
+            if (res.message === 'success') {
+                getUsers();
+            }
+        })
+        .catch(err => {
+            console.log(err);
+        });
+};
+
+const deleteUser = (id) => {
+    fetch(host + '/admin/users/delete', {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token 
+        },
+        method: 'DELETE',
+        body: JSON.stringify({
+            id
+        })
+    })
+        .then(result => {
+            return result.json();
+        })
+        .then(res => {
+            if (res.message === 'success') {
+                getUsers();
+            }
+        })
+        .catch(err => {
+            console.log(err);
+        });
+};
+
+const deleteMail = (id) => {
+    fetch(host + '/admin/mails/delete', {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token 
+        },
+        method: 'DELETE',
+        body: JSON.stringify({
+            id
+        })
+    })
+        .then(result => {
+            return result.json();
+        })
+        .then(res => {
+            if (res.message === 'success') {
+                getMails();
+            }
+        })
+        .catch(err => {
+            console.log(err);
+        });
+};

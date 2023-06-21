@@ -15,7 +15,7 @@ let random = Math.floor(Math.random() * 4);
 
 const homeElement = document.getElementById('home');
 
-//homeElement.style.backgroundImage = 'url("/es/img/background-'+random+'.jpg")';
+homeElement.style.backgroundImage = 'url(./img/background-'+random+'.jpg)';
 
 // Redirect to another language page
 const selectElement = document.getElementById('select-language');

@@ -9,7 +9,7 @@ let random = Math.floor(Math.random() * 4);
 
 const homeElement = document.getElementById('home');
 
-//homeElement.style.backgroundImage = 'url(../img/background-'+random+'.jpg)';
+homeElement.style.backgroundImage = 'url(./img/background-'+random+'.jpg)';
 
 // Redirect to another language page
 const selectElement = document.getElementById('select-language');
@@ -74,6 +74,7 @@ jQuery('#login').click(() => {
                 case 'success':
                     localStorage.setItem('token', res.token);
                     localStorage.setItem('isLogged',true);
+                    localStorage.setItem('isAdmin', res.user.admin);
                     
                     window.location.replace(newPage);
                     return true;
