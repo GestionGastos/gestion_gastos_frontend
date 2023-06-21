@@ -2,14 +2,14 @@ const currentPage = window.location.href;
 const labelErrorInvalid = document.getElementById('label-error-invalid');
 const labelErrorEmail = document.getElementById('label-error-email');
 const labelErrorPassword = document.getElementById('label-error-password');
-const newPage = currentPage.replace("/views/login.html", "/index.html");
+const newPage = currentPage.replace("/login.html", "/index.html");
 const host = 'http://localhost:8080';
 
 let random = Math.floor(Math.random() * 4);
 
 const homeElement = document.getElementById('home');
 
-homeElement.style.backgroundImage = 'url(../img/background-'+random+'.jpg)';
+//homeElement.style.backgroundImage = 'url(./img/background-'+random+'.jpg)';
 
 // Redirect to another language page
 const selectElement = document.getElementById('select-language');

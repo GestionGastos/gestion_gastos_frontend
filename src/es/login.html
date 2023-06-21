@@ -4,16 +4,16 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Sign up - Budget</title>
-        <link rel="stylesheet" href="../css/fonts.css">
-        <link rel="stylesheet" href="../css/index.css" />
-        <link rel="stylesheet" href="../css/user.css" />
-        <link rel="stylesheet" href="../css/form.css" />
-        <script src="../lib/jquery-3.7.0.min.js"></script>
+        <title>Login - Budget</title>
+        <link rel="stylesheet" href="./css/fonts.css">
+        <link rel="stylesheet" href="./css/index.css" />
+        <link rel="stylesheet" href="./css/user.css" />
+        <link rel="stylesheet" href="./css/form.css" />
+        <script src="./lib/jquery-3.7.0.min.js"></script>
     </head>
     <body id="home">
         <header class="header" id="home">
-            <nav class="header__nav-horizontal" style="background-color: transparent">
+            <nav class="header__nav-horizontal" style="background-color: transparent;">
                 <div class="horizontal-menu-left">
                     <ul class="header__item-list-horizontal">
                         <li class="header__items-horizontal">
@@ -44,44 +44,26 @@
             <a id="principal">Principal</a><span id="second-part"></span>
         </div>
 
-        <div id="signup-form" class="card">
+        <div id="login-form" class="card">
             <form>
-                <h3>Registrate</h3>
-                <div class="form-control">
-                    <label for="name">Nombre</label>
-                    <label id="label-error-name" class="label-error" style="display:none;">El nombre es requerido</label>
-                    <input type="text" id="name" name="name" placeholder="Nombre" />
-                </div>
-                <div class="form-control">
-                    <label for="lastname">Apellido</label>
-                    <label id="label-error-lastname" class="label-error" style="display:none;">El apellido es requerido</label>
-                    <input type="text" id="lastname" name="lastname" placeholder="Apellido" />
-                </div>
-                <div class="form-control">
-                    <label for="username">Nombre de Usuario</label>
-                    <label id="label-error-username" class="label-error" style="display:none;">El nombre de usuario es requerido</label>
-                    <input type="text" id="username" name="username" placeholder="Username" />
-                </div>
+                <h3>Login</h3>
+                <label id="label-error-invalid" class="label-error" style="display:none;">Correo o Constraseña invalida</label>
+                <label id="label-error-deleted" class="label-error" style="display:none;">Usuario no encontrado</label>
                 <div class="form-control">
                     <label for="email">E-Mail</label>
-                    <label id="label-error-email" class="label-error" style="display:none;">El E-Mail es requerido</label>
-                    <input type="email" id="email" name="email" placeholder="email@ejemplo.com" />
+                    <label id="label-error-email" class="label-error" style="display:none;">El correo es requerido</label>
+                    <input type="email" id="email" name="email" placeholder="email@ejemplo.com" required/>
                 </div>
                 <div class="form-control">
                     <label for="password">Contraseña</label>
-                    <label id="label-error-password" class="label-error" style="display:none;">La constraseña es requerido</label>
-                    <input type="password" id="password" name="password" placeholder="Contraseña" />
-                </div>
-                <div class="form-control">
-                    <label for="confirm-password">Confirmar Contraseña</label>
-                    <label id="label-error-confirm-password-empty"  class="label-error" style="display:none;">Debe confirmar la contraseña</label>
-                    <label id="label-error-confirm-password" class="label-error" style="display:none;">La contraseña no coincide</label>
-                    <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirmar Contraseña" />
+                    <label id="label-error-password" class="label-error" style="display:none;">La contraseña es requerida</label>
+                    <input type="password" id="password" name="password" placeholder="Contraseña" required/>
                 </div>
                 <input type="checkbox" id="show-password" name="show-password" /> Mostrar contraseña
                 <br>
-                <a id="login-link">Ya tengo cuenta</a><br><br>
-                <button id="signup" type="button" class="btn">Registrarse</button>
+                <a id="forget" href="">¿Olvido su contraseña?</a><br><br>
+                <button type="button" id="login" class="btn">Login</button>
+                <button type="button" id="signup" class="btn">Registrarse</button>
             </form>
         </div>
 
@@ -123,7 +105,7 @@
                     <div id="first-question-answer" style="display:none;">
                         <h4>Rta.</h4>
                         <p>Debes dar clic en botón nuevo que se encuntra en el barra de menú o en el botón crear nuevo que se encuentra en el módulo principal</p>
-                        <img style="width: 100%;" src="../img/frequent-questions/buttons.PNG" alt="buttons" />
+                        <img style="width: 100%;" src="./img/frequent-questions/buttons.PNG" alt="buttons" />
                         <p>Seguido de esto se desplegara un formulario donde deberas ingresar como datos basicos los siguientes campos:</p>
                         <ul>
                             <li>Año</li>
@@ -132,13 +114,13 @@
                             <li>Ahorro. (Solo en caso de querer agregar un monto a ahorrar)</li>
                             <li>Ingresos Adicionales. (Solo en caso de tener ingresos adicionales)</li>
                         </ul>
-                        <img style="width: 100%" src="../img/frequent-questions/basics-form.PNG" alt="Basic Forms" />
+                        <img style="width: 100%" src="./img/frequent-questions/basics-form.PNG" alt="Basic Forms" />
                         <p>Seguido de esto debe inngresar los gastos fijos.</p>
-                        <img style="width: 100%" src="../img/frequent-questions/expenses.PNG" alt="Expenses" />
+                        <img style="width: 100%" src="./img/frequent-questions/expenses.PNG" alt="Expenses" />
                         <p>Para finalizar podra ingresar etiquetas, que representaran los gastos adicionales.</p>
-                        <img style="width: 100%" src="../img/frequent-questions/tags.PNG" alt="Tags" />
+                        <img style="width: 100%" src="./img/frequent-questions/tags.PNG" alt="Tags" />
                         <p>Automaticamente se mostrar el presupuesto del mes actual.</p>
-                        <img style="width: 100%" src="../img/frequent-questions/budget.PNG" alt="budget" />
+                        <img style="width: 100%" src="./img/frequent-questions/budget.PNG" alt="budget" />
                     </div>
                     <hr>
                     <h3 id="second-question" style="cursor:pointer;">+ ¿Cómo debe ser la contraseña?</h3>
@@ -162,7 +144,7 @@
             </div>
         </main>
     </body>
-    <script src="../js/signup.js"></script>
+    <script src="./js/login.js"></script>
     <footer>
         <p>Copyright &copy; 2023 Budget, Todos los derechos reservados</p>
     </footer>

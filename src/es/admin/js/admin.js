@@ -9,6 +9,38 @@ if (isLogged === null) {
     window.location.replace(newPage);
 }
 
+// logout
+const logoutButton = document.getElementById('logout');
+
+const logoutFunction = () => {
+    fetch(host + '/users/logout', {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify({
+            token: localStorage.getItem('token')
+        })
+    })
+    .then(result => {
+        return result.json();
+    })
+    .then(res => {
+        if (res.message === 'success') {
+            localStorage.removeItem('isLogged');
+            localStorage.removeItem('token');
+            const newPage = currentPage.replace("/admin/admin.html", "/login.html");
+            window.location.replace(newPage);
+        }
+    })
+    .catch(err => {
+        console.log(err);
+    });
+};
+
+logoutButton.addEventListener('click', logoutFunction);
+
+// Get info
 jQuery("document").ready(() => {
     getUsers();
     getMails();
@@ -23,7 +55,7 @@ const getUsers = () => {
             if (res.message === 'success') {
                 const results = res.result;
                 if (results.length > 0) {
-                    html = "<table>" +
+                    html = "<table cellspacing='0' class='table'>" +
                             "<thead>" +
                                 "<tr>" +
                                     "<th>E-Mail</th>" +
@@ -40,7 +72,7 @@ const getUsers = () => {
                                     "<td>" + result.name + "</td>" +
                                     "<td>" + result.lastname + "</td>" +
                                     "<td>" + result.username + "</td>" +
-                                    "<td><button type='button'>Eliminar</button>" +
+                                    "<td><button type='button' class='btn-delete-table'>Eliminar</button>" +
                                 "<tr>";
                     });
                     html += "</tbody>" +
@@ -62,7 +94,7 @@ const getMails = () => {
                 const results = res.result;
                 console.log(results);
                 if (results.length > 0) {
-                    html = "<table>" +
+                    html = "<table cellspacing='0' class='table'>" +
                     "<thead>" +
                         "<tr>" +
                             "<th>De</th>" +
@@ -77,7 +109,7 @@ const getMails = () => {
                                 "<td>" + result.from + "</td>" +
                                 "<td>" + result.subject + "</td>" +
                                 "<td>" + result.message + "</td>" +
-                                "<td><button type='button'>Eliminar</button>" +
+                                "<td><button type='button' class='btn-delete-table'>Eliminar</button>" +
                             "<tr>";
                     });
                     html += "</tbody>" +

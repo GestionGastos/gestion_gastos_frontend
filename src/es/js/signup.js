@@ -15,7 +15,7 @@ let random = Math.floor(Math.random() * 4);
 
 const homeElement = document.getElementById('home');
 
-homeElement.style.backgroundImage = 'url(../img/background-'+random+'.jpg)';
+//homeElement.style.backgroundImage = 'url("/es/img/background-'+random+'.jpg")';
 
 // Redirect to another language page
 const selectElement = document.getElementById('select-language');
@@ -31,7 +31,7 @@ selectElement.addEventListener('change', () => {
 let isLogged = localStorage.getItem('isLogged');
 
 if (isLogged === 'true') {
-    const newPage = currentPage.replace("/views/signup.html", "/index.html");
+    const newPage = currentPage.replace("/signup.html", "/index.html");
     window.location.replace(newPage);
 }
 

@@ -36,7 +36,7 @@ const checkAPI = () => {
             console.log("Error, API is not running");
         })
         .catch(err => {
-            const newPage = currentPage.replace("/index.html", "/views/login.html");
+            const newPage = currentPage.replace("/index.html", "/login.html");
             window.location.replace(newPage);
         });
 };
@@ -47,7 +47,7 @@ const checkLogin = () => {
     localToken = localStorage.getItem('token');
     localIsLogged = localStorage.getItem('isLogged');
     if (localIsLogged === null) {
-        const newPage = currentPage.replace("/index.html", "/views/login.html");
+        const newPage = currentPage.replace("/index.html", "/login.html");
         window.location.replace(newPage);
     } else {
         token = localToken;
@@ -75,7 +75,7 @@ const logoutFunction = () => {
         if (res.message === 'success') {
             localStorage.removeItem('isLogged');
             localStorage.removeItem('token');
-            const newPage = currentPage.replace("/index.html", "/views/login.html");
+            const newPage = currentPage.replace("/index.html", "/login.html");
             window.location.replace(newPage);
         }
     })
