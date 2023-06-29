@@ -5,6 +5,7 @@ const currentPage = window.location.href;
 let newPage = currentPage.replace("/admin/admin.html", "/login.html");
 const isLogged = localStorage.getItem('isLogged');
 const isAdmin = localStorage.getItem('isAdmin');
+const token = localStorage.getItem('token');
 
 if (isLogged === null) {
     window.location.replace(newPage);
@@ -31,7 +32,7 @@ const logoutButton = document.getElementById('logout');
 const logoutFunction = () => {
     fetch(host + '/users/logout', {
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
         },
         method: 'POST',
         body: JSON.stringify({
@@ -63,7 +64,13 @@ jQuery("document").ready(() => {
 });
 
 const getUsers = () => {
-    fetch(host + '/admin/users/')
+    fetch(host + '/admin/users/',
+    {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
+        }
+    })
         .then(result => {
             return result.json();
         })
