@@ -99,8 +99,8 @@ logoutButton.addEventListener('click', logoutFunction);
 const selectElement = document.getElementById('select-language');
 
 selectElement.addEventListener('change', () => {
-    if (selectElement.value === "en") {
-        const newPage = currentPage.replace("/es", "/en");
+    if (selectElement.value === "es") {
+        const newPage = currentPage.replace("/en", "/es");
         window.location.replace(newPage);
     }
 });
