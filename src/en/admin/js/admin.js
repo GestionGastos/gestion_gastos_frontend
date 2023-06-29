@@ -92,7 +92,7 @@ const getUsers = () => {
                     results.forEach(result => {
                         const id = result._id;
                         html += "<tr>" +
-                                    "<td id='identification'>" + id + "</td>" +
+                                    "<td id='user_id'>" + id + "</td>" +
                                     "<td>" + result.email + "</td>" +
                                     "<td>" + result.name + "</td>" +
                                     "<td>" + result.lastname + "</td>" +
@@ -100,7 +100,7 @@ const getUsers = () => {
                         if (result.deleted === false) {
                             html += "<td><button type='button' class='btn-delete-table' onclick='deleteUser();'>Delete</button>";
                         } else {
-                            html += "<td><button type='button' onclick='enableUser();'>Enable</button>";
+                            html += "<td><button type='button' class='btn-table' onclick='enableUser();'>Enable</button>";
                         }
                         html += "<tr>";
                     });
@@ -143,10 +143,11 @@ const getMails = () => {
                     results.forEach(result => {
                         const id = result._id;
                         html += "<tr>" +
+                                "<td id='mail_id'>" + id + "</td>" + 
                                 "<td>" + result.from + "</td>" +
                                 "<td>" + result.subject + "</td>" +
                                 "<td>" + result.message + "</td>" +
-                                "<td><button type='button' class='btn-delete-table' onclick='deleteMail('" + id + "');'>Delete</button>" +
+                                "<td><button type='button' class='btn-delete-table' onclick='deleteMail();'>Delete</button>" +
                             "<tr>";
                     });
                     html += "</tbody>" +
@@ -182,7 +183,7 @@ jQuery("#show-mails").on('click', () => {
 
 // Enable and Delete
 const enableUser = () => {
-    const id = document.getElementById('identification').value;
+    const id = jQuery("#user_id").text();
 
     fetch(host + '/admin/users/enable', {
         headers: {
@@ -208,7 +209,7 @@ const enableUser = () => {
 };
 
 const deleteUser = () => {
-    const id = document.getElementById('identification').value;
+    const id = jQuery("#user_id").text();
     
     fetch(host + '/admin/users/delete', {
         headers: {
@@ -233,7 +234,8 @@ const deleteUser = () => {
         });
 };
 
-const deleteMail = (id) => {
+const deleteMail = () => {
+    const id = jQuery("#mail_id").text();
     fetch(host + '/admin/mails/delete', {
         headers: {
             'Content-Type': 'application/json',
