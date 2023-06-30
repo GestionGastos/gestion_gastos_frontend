@@ -99,9 +99,9 @@ const getUsers = () => {
                                     "<td>" + result.lastname + "</td>" +
                                     "<td>" + result.username + "</td>";
                         if (result.deleted === false) {
-                            html += "<td><button type='button' class='btn-delete-table' onclick='deleteUser();'>Eliminar</button>";
+                            html += "<td><button type='button' class='btn-delete-table' onclick='deleteUser(\"" + id + "\");'>Eliminar</button>";
                         } else {
-                            html += "<td><button type='button' class='btn-table' onclick='enableUser();'>Habilitar</button>";
+                            html += "<td><button type='button' class='btn-table' onclick='enableUser(\"" + id + "\");'>Habilitar</button>";
                         }
                         html += "<tr>";
                     });
@@ -146,7 +146,7 @@ const getMails = () => {
                                 "<td>" + result.from + "</td>" +
                                 "<td>" + result.subject + "</td>" +
                                 "<td>" + result.message + "</td>" +
-                                "<td><button type='button' class='btn-delete-table' onclick='deleteMail();'>Eliminar</button>" +
+                                "<td><button type='button' class='btn-delete-table' onclick='deleteMail(\"" + id + "\");'>Eliminar</button>" +
                             "<tr>";
                     });
                     html += "</tbody>" +
@@ -178,8 +178,7 @@ jQuery("#show-mails").on('click', () => {
 });
 
 // Enable and Delete
-const enableUser = () => {
-    const id = jQuery("#user_id").text();
+const enableUser = (id) => {
     fetch(host + '/admin/users/enable', {
         headers: {
             'Content-Type': 'application/json',
@@ -203,8 +202,7 @@ const enableUser = () => {
         });
 };
 
-const deleteUser = () => {
-    const id = jQuery("#user_id").text();
+const deleteUser = (id) => {
     fetch(host + '/admin/users/delete', {
         headers: {
             'Content-Type': 'application/json',
@@ -228,8 +226,7 @@ const deleteUser = () => {
         });
 };
 
-const deleteMail = () => {
-    const id = jQuery("#mail_id").text();
+const deleteMail = (id) => {
     fetch(host + '/admin/mails/delete', {
         headers: {
             'Content-Type': 'application/json',
